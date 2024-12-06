@@ -12,7 +12,8 @@ async function getData(slug: string) {
             slug: slug,
         },
         context: {
-            headers: getPreprHeaders(),
+            // Call the getPreprHeaders function to get the appropriate headers
+            headers: await getPreprHeaders()
         },
         fetchPolicy: 'no-cache',
     })

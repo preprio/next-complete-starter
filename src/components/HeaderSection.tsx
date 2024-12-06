@@ -7,10 +7,10 @@ interface HeaderSectionProps {
 }
 
 export default function HeaderSection(props: HeaderSectionProps) {
-    const {title, image} = getFragmentData(SECTION_HEADER_FRAGMENT, props.data)
+    const {_context, title, image} = getFragmentData(SECTION_HEADER_FRAGMENT, props.data)
 
     return (
-        <div className='px-4 md:px-10 lg:px-20'>
+        <div className='px-4 md:px-10 lg:px-20' data-prepr-variant-key={_context?.variant_key}>
             <div className='mx-auto max-w-7xl w-full'
             >
                 <div className='flex flex-wrap gap-y-8 py-16 md:flex-nowrap flex-shrink-0'>
@@ -36,7 +36,7 @@ export default function HeaderSection(props: HeaderSectionProps) {
                                 </div>
                             </div>
                             <Link
-                                href='/catalog'
+                                href='#' data-prepr-variant-event
                                 className='flex items-center text-nowrap rounded-r-full bg-blue-600 px-4 text-base md:text-lg font-bold text-white hover:cursor-pointer hover:bg-blue-700 lg:px-8 lg:text-2xl'>
                                 FIND A CAR
                             </Link>

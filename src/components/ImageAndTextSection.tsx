@@ -25,7 +25,8 @@ export default function ImageAndTextSection(props: ImageAndTextSectionProps) {
         </div>
     )
 
-    const {align, title, cta_button} = getFragmentData(SECTION_IMAGE_AND_TEXT_FRAGMENT, props.data)
+    // Get the _context for the image and text. It contains the variant key value for this element which you need below.
+    const {_context, align, title, cta_button} = getFragmentData(SECTION_IMAGE_AND_TEXT_FRAGMENT, props.data)
     const cta = getFragmentData(CTA_BUTTON_FRAGMENT, cta_button)
 
     const href = cta?.internal_link && cta.internal_link[0]
@@ -34,7 +35,8 @@ export default function ImageAndTextSection(props: ImageAndTextSectionProps) {
 
     return (
         <div
-            className='mx-auto max-w-7xl w-full bg-white'>
+            /* Set the HTML attribute with the matching variant key to collect impressions on the image and text section */
+            className='mx-auto max-w-7xl w-full bg-white' data-prepr-variant-key={_context?.variant_key}>
             <div className='flex w-full flex-wrap'>
                 {align === 'left' && image}
                 <div className='w-full space-y-8 px-12 py-10 md:basis-6/12 lg:px-28 lg:py-24'>
@@ -48,7 +50,8 @@ export default function ImageAndTextSection(props: ImageAndTextSectionProps) {
                         <div className='h-4 w-full max-w-64 rounded-sm bg-gray-100'></div>
                     </div>
                     {href && <div>
-                        <Link href='#'><Button buttonType='primary'>{cta?.text}</Button></Link>
+                        {/* Set the HTML attribute to collect click events on the CTA link */}
+                        <Link href='#' data-prepr-variant-event><Button buttonType='primary'>{cta?.text}</Button></Link>
                     </div>}
                 </div>
                 {align === 'right' && image}
