@@ -30,11 +30,6 @@ In the .env file, replace `YOUR_PREPR_GRAPHQL_URL` with the *API URL* of the Pre
 
 ![preview API URL](https://assets-site.prepr.io//35k5a4g45wuy-preview-access-token.png)
 
-Then, create a new access token in Prepr with the `segments` permission.
-
-![segments access token](https://assets-site.prepr.io//2mcoy87hhmfz-segments-access-token.png)
-
-Replace `YOUR_SEGMENTS_ACCESS_TOKEN` with the newly generated *Access token* value.
 
 ## Development Server
 
