@@ -22,13 +22,22 @@ pnpm install --shamefully-hoist
 Copy the .env.example file in this directory to .env (which will be ignored by Git) by running the following command:
 
 ```bash
-cp .env.example .env.
+cp .env.example .env
 ```
 
 ## Update the environment file
 In the .env file, replace `YOUR_PREPR_GRAPHQL_URL` with the *API URL* of the Prepr *GraphQL Preview* access token from your Acme Lease Demo environment.
 
 ![preview API URL](https://assets-site.prepr.io//35k5a4g45wuy-preview-access-token.png)
+
+
+## Add the Prepr tracking pixel
+
+Go to the `src/app/layout.tsx` file and replace the placeholder `YOUR-PREPR-TRACKING-CODE` with your own tracking code in Prepr.
+
+![event tracking page](https://assets-site.prepr.io//1j41fnhj1305-tracking-code.png)
+
+Don't forget to remove the HTML tags `<!-- Prepr Tracking Code -->`, `<script>` and `</script>` tags from the embedded code.
 
 
 ## Development Server
