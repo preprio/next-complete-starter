@@ -14,12 +14,14 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** The `JSON` scalar type represents any JSON-serializable value, allowing for dynamic and structured data as per ECMA-404. */
+  Json: { input: any; output: any; }
   /** The DateTime type adheres to ISO 8601 standard. */
   _DateTime: { input: any; output: any; }
 };
 
 /** This union type holds all content models. */
-export type AllModels = Article | Car | Category | Page | Redirect | SectionCarRecommendations;
+export type AllModels = Author | Category | Faq | Navigation | Page | Post | Product | Redirect;
 
 export type ApplePodcast = {
   __typename?: 'ApplePodcast';
@@ -27,153 +29,14 @@ export type ApplePodcast = {
   url: Scalars['String']['output'];
 };
 
-/** Single Article. */
-export type Article = Model & {
-  __typename?: 'Article';
-  /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
-  /** The time the content item was changed. */
-  _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
-  _context?: Maybe<Context>;
-  /** The time the content item was created. */
-  _created_on: Scalars['String']['output'];
-  /** Id of your Prepr Environment. */
-  _environment_id: Scalars['String']['output'];
-  /** Unique identifier for each content item. */
-  _id: Scalars['String']['output'];
-  /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
-  _locale: Scalars['String']['output'];
-  _locales: Array<Scalars['String']['output']>;
-  /** This field returns all localizations for this content item. */
-  _localizations: Array<Article>;
-  /** The time for when the content item is or will be published. */
-  _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
-  /** Calculated time to read in minutes. */
-  _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
-  /** Unique within Type, string identifier for each content item. */
-  _slug?: Maybe<Scalars['String']['output']>;
-  /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
-  /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
-  content?: Maybe<Array<Maybe<_Prepr_Types>>>;
-  intro?: Maybe<Scalars['String']['output']>;
-  seo?: Maybe<Seo>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-export enum ArticleSortInput {
-  ChangedOn = 'changed_on',
-  ChangedOnAsc = 'changed_on_ASC',
-  ChangedOnDesc = 'changed_on_DESC',
-  CreatedOn = 'created_on',
-  CreatedOnAsc = 'created_on_ASC',
-  CreatedOnDesc = 'created_on_DESC',
-  IntroAsc = 'intro_ASC',
-  IntroDesc = 'intro_DESC',
-  PublishOn = 'publish_on',
-  PublishOnAsc = 'publish_on_ASC',
-  PublishOnDesc = 'publish_on_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC'
-}
-
-export type ArticleWhereInput = {
-  _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  /** Matches if the Id field is equal to one of the items in the given list. */
-  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches if the Id field is not equal to one of the items in the given list. */
-  _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
-  _or?: InputMaybe<Array<ArticleWhereInput>>;
-  _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  /** Matches any content item containing the given text term (full-text search). */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  _search_options?: InputMaybe<SearchOptionsInput>;
-  _slug_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  _slug_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item tagged with all items from the given list. */
-  _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item tagged with at least one item from the given list. */
-  _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item that is tagged. */
-  _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Matches any content item not tagged with an item from the given list. */
-  _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches if the field is equal to the given value. */
-  intro?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field matches any of the given values. */
-  intro_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Full fuzzy text search, not case sensitive. */
-  intro_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field ends with the given value. */
-  intro_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** Excludes with full fuzzy text search, not case sensitive. */
-  intro_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field starts with the given value. */
-  intro_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field is equal to the given value. */
-  title?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field matches any of the given values. */
-  title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Full fuzzy text search, not case sensitive. */
-  title_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field ends with the given value. */
-  title_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** Excludes with full fuzzy text search, not case sensitive. */
-  title_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field starts with the given value. */
-  title_starts_with?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** List of Articles items. */
-export type Articles = {
-  __typename?: 'Articles';
-  items: Array<Article>;
-  total: Scalars['Int']['output'];
-};
-
 /** Prepr Asset system model */
 export type Asset = {
   __typename?: 'Asset';
   /** Unique identifier for each asset. */
   _id: Scalars['String']['output'];
+  _locale: Scalars['String']['output'];
+  /** This field returns all localizations for this asset. */
+  _localizations: Array<Asset>;
   _type: Scalars['String']['output'];
   /** Contextual field; alignment of the asset when used in a content item. */
   alignment?: Maybe<AssetAlignment>;
@@ -237,94 +100,68 @@ export type Assets = {
   items?: Maybe<Array<Maybe<Asset>>>;
 };
 
-/** CTAButton component. */
-export type CtaButton = Component & {
-  __typename?: 'CTAButton';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  internal_link: Array<Page>;
-  link?: Maybe<Scalars['String']['output']>;
-  text?: Maybe<Scalars['String']['output']>;
+export type AssetsWhereInput = {
+  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-/** Single Car. */
-export type Car = Model & {
-  __typename?: 'Car';
+/** Single Author. */
+export type Author = Model & {
+  __typename?: 'Author';
   /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
+  _bookmarks: Scalars['Int']['output'];
   /** The time the content item was changed. */
   _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
   _context?: Maybe<Context>;
   /** The time the content item was created. */
   _created_on: Scalars['String']['output'];
   /** Id of your Prepr Environment. */
   _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
   /** Unique identifier for each content item. */
   _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
   /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
+  _likes: Scalars['Int']['output'];
   _locale: Scalars['String']['output'];
   _locales: Array<Scalars['String']['output']>;
   /** This field returns all localizations for this content item. */
-  _localizations: Array<Car>;
+  _localizations: Array<Author>;
   /** The time for when the content item is or will be published. */
   _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
   /** Calculated time to read in minutes. */
   _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
   /** Unique within Type, string identifier for each content item. */
   _slug?: Maybe<Scalars['String']['output']>;
   /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
+  _subscribes: Scalars['Int']['output'];
   /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
-  categories: Array<Category>;
+  _views: Scalars['Int']['output'];
   image?: Maybe<Asset>;
-  monthly_price?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
-export enum CarSortInput {
+
+/** Single Author. */
+export type Author_EventArgs = {
+  name?: _Event;
+};
+
+export enum AuthorSortInput {
   ChangedOn = 'changed_on',
   ChangedOnAsc = 'changed_on_ASC',
   ChangedOnDesc = 'changed_on_DESC',
   CreatedOn = 'created_on',
   CreatedOnAsc = 'created_on_ASC',
   CreatedOnDesc = 'created_on_DESC',
-  MonthlyPriceAsc = 'monthly_price_ASC',
-  MonthlyPriceDesc = 'monthly_price_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
   PublishOn = 'publish_on',
   PublishOnAsc = 'publish_on_ASC',
-  PublishOnDesc = 'publish_on_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC'
+  PublishOnDesc = 'publish_on_DESC'
 }
 
-export type CarWhereInput = {
+export type AuthorWhereInput = {
   _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
   _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
   _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
@@ -338,7 +175,7 @@ export type CarWhereInput = {
   /** Matches if the Id field is not equal to one of the items in the given list. */
   _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
-  _or?: InputMaybe<Array<CarWhereInput>>;
+  _or?: InputMaybe<Array<AuthorWhereInput>>;
   _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
   _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
   _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
@@ -356,38 +193,93 @@ export type CarWhereInput = {
   _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
   /** Matches any content item not tagged with an item from the given list. */
   _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Match on Category fields. */
-  categories?: InputMaybe<CategoryWhereInput>;
+  image?: InputMaybe<AssetsWhereInput>;
   /** Matches if the field is equal to the given value. */
-  monthly_price?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field matches any of the given values. */
-  monthly_price_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  name_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Full fuzzy text search, not case sensitive. */
-  monthly_price_contains?: InputMaybe<Scalars['String']['input']>;
+  name_contains?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field ends with the given value. */
-  monthly_price_ends_with?: InputMaybe<Scalars['String']['input']>;
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** Excludes with full fuzzy text search, not case sensitive. */
-  monthly_price_not_contains?: InputMaybe<Scalars['String']['input']>;
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field starts with the given value. */
-  monthly_price_starts_with?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field is equal to the given value. */
-  title?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field matches any of the given values. */
-  title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Full fuzzy text search, not case sensitive. */
-  title_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field ends with the given value. */
-  title_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** Excludes with full fuzzy text search, not case sensitive. */
-  title_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field starts with the given value. */
-  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** List of Cars items. */
-export type Cars = {
-  __typename?: 'Cars';
-  items: Array<Car>;
+/** List of Authors items. */
+export type Authors = {
+  __typename?: 'Authors';
+  items: Array<Author>;
+  total: Scalars['Int']['output'];
+};
+
+export type BlueskyPost = {
+  __typename?: 'BlueskyPost';
+  _id: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+/** Button component. */
+export type Button = Component & {
+  __typename?: 'Button';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  button_type?: Maybe<ButtonType>;
+  external_url?: Maybe<Scalars['String']['output']>;
+  link?: Maybe<Button_Link>;
+  text?: Maybe<Scalars['String']['output']>;
+  use_external_link?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** ButtonType. */
+export enum ButtonType {
+  /** Link */
+  Link = 'LINK',
+  /** Primary */
+  Primary = 'PRIMARY',
+  /** Secondary */
+  Secondary = 'SECONDARY'
+}
+
+export type Button_Link = Category | Page | Post;
+
+/** CTA component. */
+export type Cta = Component & {
+  __typename?: 'CTA';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  heading?: Maybe<Scalars['String']['output']>;
+  sub_heading?: Maybe<Scalars['String']['output']>;
+};
+
+/** Cards component. */
+export type Cards = Component & {
+  __typename?: 'Cards';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  button?: Maybe<Button>;
+  cards: Array<Cards_Cards>;
+  heading?: Maybe<Scalars['String']['output']>;
+  sub_heading?: Maybe<Scalars['String']['output']>;
+  variant?: Maybe<CardsVariant>;
+};
+
+/** CardsVariant. */
+export enum CardsVariant {
+  /** Blog */
+  Blog = 'BLOG',
+  /** Default */
+  Default = 'DEFAULT'
+}
+
+export type Cards_Cards = Post | Product;
+
+/** List of Categories items. */
+export type Categories = {
+  __typename?: 'Categories';
+  items: Array<Category>;
   total: Scalars['Int']['output'];
 };
 
@@ -395,67 +287,42 @@ export type Cars = {
 export type Category = Model & {
   __typename?: 'Category';
   /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
+  _bookmarks: Scalars['Int']['output'];
   /** The time the content item was changed. */
   _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
   _context?: Maybe<Context>;
   /** The time the content item was created. */
   _created_on: Scalars['String']['output'];
   /** Id of your Prepr Environment. */
   _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
   /** Unique identifier for each content item. */
   _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
   /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
+  _likes: Scalars['Int']['output'];
   _locale: Scalars['String']['output'];
   _locales: Array<Scalars['String']['output']>;
   /** This field returns all localizations for this content item. */
   _localizations: Array<Category>;
   /** The time for when the content item is or will be published. */
   _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
   /** Calculated time to read in minutes. */
   _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
   /** Unique within Type, string identifier for each content item. */
   _slug?: Maybe<Scalars['String']['output']>;
   /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
+  _subscribes: Scalars['Int']['output'];
   /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
-  fefew: Array<Car>;
-  title?: Maybe<Scalars['String']['output']>;
+  _views: Scalars['Int']['output'];
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Single Category. */
-export type CategoryFefewArgs = {
-  personalize?: Scalars['Boolean']['input'];
-  personalize_for_country?: InputMaybe<Scalars['String']['input']>;
-  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+export type Category_EventArgs = {
+  name?: _Event;
 };
 
 export enum CategorySortInput {
@@ -465,11 +332,11 @@ export enum CategorySortInput {
   CreatedOn = 'created_on',
   CreatedOnAsc = 'created_on_ASC',
   CreatedOnDesc = 'created_on_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
   PublishOn = 'publish_on',
   PublishOnAsc = 'publish_on_ASC',
-  PublishOnDesc = 'publish_on_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC'
+  PublishOnDesc = 'publish_on_DESC'
 }
 
 export type CategoryWhereInput = {
@@ -504,27 +371,39 @@ export type CategoryWhereInput = {
   _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
   /** Matches any content item not tagged with an item from the given list. */
   _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Match on Car fields. */
-  fefew?: InputMaybe<CarWhereInput>;
   /** Matches if the field is equal to the given value. */
-  title?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field matches any of the given values. */
-  title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  name_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Full fuzzy text search, not case sensitive. */
-  title_contains?: InputMaybe<Scalars['String']['input']>;
+  name_contains?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field ends with the given value. */
-  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
   /** Excludes with full fuzzy text search, not case sensitive. */
-  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field starts with the given value. */
-  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** List of Categorys items. */
-export type Categorys = {
-  __typename?: 'Categorys';
-  items: Array<Category>;
-  total: Scalars['Int']['output'];
+/** Remote Source CommerceProducts. */
+export type CommerceProducts = {
+  __typename?: 'CommerceProducts';
+  /** Unique identifier for each remote source item, defined by the remote source. */
+  _id: Scalars['String']['output'];
+  /** This field returns the raw data content in JSON format retrieved from the remote source. */
+  _json: Scalars['Json']['output'];
+};
+
+/** List of Remote Source CommerceProducts items in a Dynamic Content Field. */
+export type CommerceProductsCollection = {
+  __typename?: 'CommerceProductsCollection';
+  /** A list of items. */
+  items: Array<CommerceProducts>;
+};
+
+export type CommerceProductsWhereInput = {
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** A component is a predefined set of fields that can be used in models. You can think of a component as a flexible, reusable template where you define fields once, and then fill them with different content every time you use it. */
@@ -532,6 +411,20 @@ export type Component = {
   _context?: Maybe<Context>;
   /** Unique identifier for each content component instance. */
   _id: Scalars['String']['output'];
+};
+
+/** Contact component. */
+export type Contact = Component & {
+  __typename?: 'Contact';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
+  form_title?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  hubspot_form_id?: Maybe<Scalars['String']['output']>;
+  hubspot_portal_id?: Maybe<Scalars['String']['output']>;
+  phone_number?: Maybe<Scalars['String']['output']>;
+  sub_heading?: Maybe<Scalars['String']['output']>;
 };
 
 export type ContentItems = {
@@ -559,8 +452,6 @@ export type ContentItemsWhereInput = {
   _search?: InputMaybe<Scalars['String']['input']>;
   _search_options?: InputMaybe<SearchOptionsInput>;
   _slug_any?: InputMaybe<Array<Scalars['String']['input']>>;
-  _stories_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  _stories_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
@@ -570,7 +461,6 @@ export type ContentItemsWhereInput = {
 
 export type Context = {
   __typename?: 'Context';
-  countries?: Maybe<Array<Scalars['String']['output']>>;
   /** The unique identifier for an A/B test or personalization block used for analytics. */
   group_id?: Maybe<Scalars['String']['output']>;
   /** Returns the kind of personalized content: `PERSONALIZATION` | `AB_TEST`. */
@@ -586,45 +476,207 @@ export type Context = {
 export type Coordinates = {
   __typename?: 'Coordinates';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  latitude?: Maybe<Scalars['Float']['output']>;
-  longitude?: Maybe<Scalars['Float']['output']>;
+  latitude: Scalars['Float']['output'];
+  longitude: Scalars['Float']['output'];
 };
 
-/** The Customer Relation type is specifying the kind of relationship between the customer and your content. */
-export enum CustomerRelationType {
-  Bookmarked = 'BOOKMARKED',
-  Clicked = 'CLICKED',
-  Commented = 'COMMENTED',
-  Liked = 'LIKED',
-  Purchased = 'PURCHASED',
-  Shared = 'SHARED',
-  Subscribed = 'SUBSCRIBED',
-  Viewed = 'VIEWED',
-  Voted = 'VOTED'
-}
-
 export type CustomerRelationWhereInput = {
-  _type?: InputMaybe<CustomerRelationType>;
+  event: _Event;
   id?: InputMaybe<Scalars['String']['input']>;
   reference_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Single FAQ. */
+export type Faq = Model & {
+  __typename?: 'FAQ';
+  /** Count of bookmark events. */
+  _bookmarks: Scalars['Int']['output'];
+  /** The time the content item was changed. */
+  _changed_on: Scalars['String']['output'];
+  _context?: Maybe<Context>;
+  /** The time the content item was created. */
+  _created_on: Scalars['String']['output'];
+  /** Id of your Prepr Environment. */
+  _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
+  /** Unique identifier for each content item. */
+  _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
+  /** Count of like events. */
+  _likes: Scalars['Int']['output'];
+  _locale: Scalars['String']['output'];
+  _locales: Array<Scalars['String']['output']>;
+  /** This field returns all localizations for this content item. */
+  _localizations: Array<Faq>;
+  /** The time for when the content item is or will be published. */
+  _publish_on?: Maybe<Scalars['String']['output']>;
+  /** Calculated time to read in minutes. */
+  _read_time?: Maybe<Scalars['Int']['output']>;
+  /** Unique within Type, string identifier for each content item. */
+  _slug?: Maybe<Scalars['String']['output']>;
+  /** Count of subscribe events. */
+  _subscribes: Scalars['Int']['output'];
+  /** Count of view events. */
+  _views: Scalars['Int']['output'];
+  internal_title?: Maybe<Scalars['String']['output']>;
+  questions: Array<FaqQuestion>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Single FAQ. */
+export type Faq_EventArgs = {
+  name?: _Event;
+};
+
+
+/** Single FAQ. */
+export type FaqQuestionsArgs = {
+  personalize?: Scalars['Boolean']['input'];
+  personalize_for_country?: InputMaybe<Scalars['String']['input']>;
+  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** FAQQuestion component. */
+export type FaqQuestion = Component & {
+  __typename?: 'FAQQuestion';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  answer?: Maybe<Scalars['String']['output']>;
+  question?: Maybe<Scalars['String']['output']>;
+};
+
+export enum FaqSortInput {
+  ChangedOn = 'changed_on',
+  ChangedOnAsc = 'changed_on_ASC',
+  ChangedOnDesc = 'changed_on_DESC',
+  CreatedOn = 'created_on',
+  CreatedOnAsc = 'created_on_ASC',
+  CreatedOnDesc = 'created_on_DESC',
+  InternalTitleAsc = 'internal_title_ASC',
+  InternalTitleDesc = 'internal_title_DESC',
+  PublishOn = 'publish_on',
+  PublishOnAsc = 'publish_on_ASC',
+  PublishOnDesc = 'publish_on_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export type FaqWhereInput = {
+  _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
+  _or?: InputMaybe<Array<FaqWhereInput>>;
+  _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches any content item containing the given text term (full-text search). */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  _search_options?: InputMaybe<SearchOptionsInput>;
+  _slug_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  _slug_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with all items from the given list. */
+  _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with at least one item from the given list. */
+  _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item that is tagged. */
+  _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Matches any content item not tagged with an item from the given list. */
+  _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches if the field is equal to the given value. */
+  internal_title?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  internal_title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  internal_title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  internal_title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  internal_title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  internal_title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field is equal to the given value. */
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** List of FAQs items. */
+export type FaQs = {
+  __typename?: 'FAQs';
+  items: Array<Faq>;
+  total: Scalars['Int']['output'];
 };
 
 export type FacebookPost = {
   __typename?: 'FacebookPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
+
+/** Feature component. */
+export type Feature = Component & {
+  __typename?: 'Feature';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  button?: Maybe<Button>;
+  heading?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Asset>;
+  image_position?: Maybe<ImagePosition>;
+  sub_heading?: Maybe<Scalars['String']['output']>;
+};
+
+/** Hero component. */
+export type Hero = Component & {
+  __typename?: 'Hero';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  buttons: Array<Button>;
+  heading?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Asset>;
+  sub_heading?: Maybe<Scalars['String']['output']>;
+};
+
+/** Embedded HubSpot form. */
+export type HubSpotEmbed = {
+  __typename?: 'HubSpotEmbed';
+  _id: Scalars['String']['output'];
+  /** HubSpot form ID */
+  embed_id: Scalars['String']['output'];
+};
+
+/** ImagePosition. */
+export enum ImagePosition {
+  /** Left */
+  Left = 'LEFT',
+  /** Right */
+  Right = 'RIGHT'
+}
 
 export type InstagramPost = {
   __typename?: 'InstagramPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
 
 /** A model is the content structure of a content item that is used in multiple locations in your CMS. A model consists of a number of fields to store your content. Common examples of models are articles, landing pages and products. */
@@ -644,11 +696,60 @@ export type Model = {
   _slug?: Maybe<Scalars['String']['output']>;
 };
 
+/** Single Navigation. */
+export type Navigation = Model & {
+  __typename?: 'Navigation';
+  /** Count of bookmark events. */
+  _bookmarks: Scalars['Int']['output'];
+  /** The time the content item was changed. */
+  _changed_on: Scalars['String']['output'];
+  _context?: Maybe<Context>;
+  /** The time the content item was created. */
+  _created_on: Scalars['String']['output'];
+  /** Id of your Prepr Environment. */
+  _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
+  /** Unique identifier for each content item. */
+  _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
+  /** Count of like events. */
+  _likes: Scalars['Int']['output'];
+  _locale: Scalars['String']['output'];
+  _locales: Array<Scalars['String']['output']>;
+  /** This field returns all localizations for this content item. */
+  _localizations: Array<Navigation>;
+  /** The time for when the content item is or will be published. */
+  _publish_on?: Maybe<Scalars['String']['output']>;
+  /** Calculated time to read in minutes. */
+  _read_time?: Maybe<Scalars['Int']['output']>;
+  /** Unique within Type, string identifier for each content item. */
+  _slug?: Maybe<Scalars['String']['output']>;
+  /** Count of subscribe events. */
+  _subscribes: Scalars['Int']['output'];
+  /** Count of view events. */
+  _views: Scalars['Int']['output'];
+  internal_name?: Maybe<Scalars['String']['output']>;
+  top_navigation: Array<Button>;
+};
+
+
+/** Single Navigation. */
+export type Navigation_EventArgs = {
+  name?: _Event;
+};
+
+
+/** Single Navigation. */
+export type NavigationTop_NavigationArgs = {
+  personalize?: Scalars['Boolean']['input'];
+  personalize_for_country?: InputMaybe<Scalars['String']['input']>;
+  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 export type NavigationItem = {
   __typename?: 'NavigationItem';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
@@ -660,65 +761,49 @@ export type NavigationItem = {
 export type Page = Model & {
   __typename?: 'Page';
   /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
+  _bookmarks: Scalars['Int']['output'];
   /** The time the content item was changed. */
   _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
   _context?: Maybe<Context>;
   /** The time the content item was created. */
   _created_on: Scalars['String']['output'];
   /** Id of your Prepr Environment. */
   _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
   /** Unique identifier for each content item. */
   _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
   /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
+  _likes: Scalars['Int']['output'];
   _locale: Scalars['String']['output'];
   _locales: Array<Scalars['String']['output']>;
   /** This field returns all localizations for this content item. */
   _localizations: Array<Page>;
   /** The time for when the content item is or will be published. */
   _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
   /** Calculated time to read in minutes. */
   _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
   /** Unique within Type, string identifier for each content item. */
   _slug?: Maybe<Scalars['String']['output']>;
   /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
+  _subscribes: Scalars['Int']['output'];
   /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
+  _views: Scalars['Int']['output'];
+  content: Array<Page_Content>;
   seo?: Maybe<Seo>;
-  stack: Array<Page_Stack>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Single Page. */
-export type PageStackArgs = {
+export type Page_EventArgs = {
+  name?: _Event;
+};
+
+
+/** Single Page. */
+export type PageContentArgs = {
   personalize?: Scalars['Boolean']['input'];
   personalize_for_country?: InputMaybe<Scalars['String']['input']>;
   personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -770,6 +855,8 @@ export type PageWhereInput = {
   _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
   /** Matches any content item not tagged with an item from the given list. */
   _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Match items on ID, Slug or Typename of referenced content items. */
+  content?: InputMaybe<Page_ContentWhereInput>;
   /** Matches if the field is equal to the given value. */
   title?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field matches any of the given values. */
@@ -784,7 +871,17 @@ export type PageWhereInput = {
   title_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Page_Stack = SectionAboutLease | SectionBenefits | SectionBlogContent | SectionCarRecommendations | SectionConsultation | SectionFaq | SectionHeader | SectionHowItWorks | SectionHowToGetACar | SectionImageAndText | SectionTestimonials;
+export type Page_Content = Cta | Cards | Contact | Faq | Feature | Hero | Static;
+
+export type Page_ContentWhereInput = {
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _typename_any?: InputMaybe<Array<Scalars['String']['input']>>;
+};
 
 /** List of Pages items. */
 export type Pages = {
@@ -793,74 +890,421 @@ export type Pages = {
   total: Scalars['Int']['output'];
 };
 
+/** Single Post. */
+export type Post = Model & {
+  __typename?: 'Post';
+  /** Count of bookmark events. */
+  _bookmarks: Scalars['Int']['output'];
+  /** The time the content item was changed. */
+  _changed_on: Scalars['String']['output'];
+  _context?: Maybe<Context>;
+  /** The time the content item was created. */
+  _created_on: Scalars['String']['output'];
+  /** Id of your Prepr Environment. */
+  _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
+  /** Unique identifier for each content item. */
+  _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
+  /** Count of like events. */
+  _likes: Scalars['Int']['output'];
+  _locale: Scalars['String']['output'];
+  _locales: Array<Scalars['String']['output']>;
+  /** This field returns all localizations for this content item. */
+  _localizations: Array<Post>;
+  /** The time for when the content item is or will be published. */
+  _publish_on?: Maybe<Scalars['String']['output']>;
+  /** Calculated time to read in minutes. */
+  _read_time?: Maybe<Scalars['Int']['output']>;
+  /** Unique within Type, string identifier for each content item. */
+  _slug?: Maybe<Scalars['String']['output']>;
+  /** Count of subscribe events. */
+  _subscribes: Scalars['Int']['output'];
+  /** Count of view events. */
+  _views: Scalars['Int']['output'];
+  author?: Maybe<Author>;
+  categories: Array<Category>;
+  content?: Maybe<Array<Maybe<_Prepr_Types>>>;
+  cover?: Maybe<Asset>;
+  excerpt?: Maybe<Scalars['String']['output']>;
+  seo?: Maybe<Seo>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Single Post. */
+export type Post_EventArgs = {
+  name?: _Event;
+};
+
+export enum PostSortInput {
+  ChangedOn = 'changed_on',
+  ChangedOnAsc = 'changed_on_ASC',
+  ChangedOnDesc = 'changed_on_DESC',
+  CreatedOn = 'created_on',
+  CreatedOnAsc = 'created_on_ASC',
+  CreatedOnDesc = 'created_on_DESC',
+  ExcerptAsc = 'excerpt_ASC',
+  ExcerptDesc = 'excerpt_DESC',
+  PublishOn = 'publish_on',
+  PublishOnAsc = 'publish_on_ASC',
+  PublishOnDesc = 'publish_on_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC'
+}
+
+export type PostWhereInput = {
+  _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
+  _or?: InputMaybe<Array<PostWhereInput>>;
+  _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches any content item containing the given text term (full-text search). */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  _search_options?: InputMaybe<SearchOptionsInput>;
+  _slug_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  _slug_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with all items from the given list. */
+  _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with at least one item from the given list. */
+  _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item that is tagged. */
+  _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Matches any content item not tagged with an item from the given list. */
+  _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Match on Author fields. */
+  author?: InputMaybe<AuthorWhereInput>;
+  /** Match on Category fields. */
+  categories?: InputMaybe<CategoryWhereInput>;
+  cover?: InputMaybe<AssetsWhereInput>;
+  /** Matches if the field is equal to the given value. */
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  excerpt_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  excerpt_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  excerpt_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  excerpt_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  excerpt_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field is equal to the given value. */
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  title_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  title_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  title_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  title_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  title_starts_with?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** List of Posts items. */
+export type Posts = {
+  __typename?: 'Posts';
+  items: Array<Post>;
+  total: Scalars['Int']['output'];
+};
+
+/** PriceSuffix. */
+export enum PriceSuffix {
+  /** MONTH */
+  Month = 'MONTH',
+  /** NONE */
+  None = 'NONE'
+}
+
+/** Single Product. */
+export type Product = Model & {
+  __typename?: 'Product';
+  /** Count of bookmark events. */
+  _bookmarks: Scalars['Int']['output'];
+  /** The time the content item was changed. */
+  _changed_on: Scalars['String']['output'];
+  _context?: Maybe<Context>;
+  /** The time the content item was created. */
+  _created_on: Scalars['String']['output'];
+  /** Id of your Prepr Environment. */
+  _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
+  /** Unique identifier for each content item. */
+  _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
+  /** Count of like events. */
+  _likes: Scalars['Int']['output'];
+  _locale: Scalars['String']['output'];
+  _locales: Array<Scalars['String']['output']>;
+  /** This field returns all localizations for this content item. */
+  _localizations: Array<Product>;
+  /** The time for when the content item is or will be published. */
+  _publish_on?: Maybe<Scalars['String']['output']>;
+  /** Calculated time to read in minutes. */
+  _read_time?: Maybe<Scalars['Int']['output']>;
+  /** Unique within Type, string identifier for each content item. */
+  _slug?: Maybe<Scalars['String']['output']>;
+  /** Count of subscribe events. */
+  _subscribes: Scalars['Int']['output'];
+  /** Count of view events. */
+  _views: Scalars['Int']['output'];
+  categories: Array<Category>;
+  content: Array<Product_Content>;
+  e_commerce_product: Array<CommerceProducts>;
+  excerpt?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Asset>;
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Float']['output']>;
+  price_suffix?: Maybe<PriceSuffix>;
+  rating?: Maybe<Rating>;
+  seo?: Maybe<Seo>;
+};
+
+
+/** Single Product. */
+export type Product_EventArgs = {
+  name?: _Event;
+};
+
+
+/** Single Product. */
+export type ProductContentArgs = {
+  personalize?: Scalars['Boolean']['input'];
+  personalize_for_country?: InputMaybe<Scalars['String']['input']>;
+  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export enum ProductSortInput {
+  ChangedOn = 'changed_on',
+  ChangedOnAsc = 'changed_on_ASC',
+  ChangedOnDesc = 'changed_on_DESC',
+  CreatedOn = 'created_on',
+  CreatedOnAsc = 'created_on_ASC',
+  CreatedOnDesc = 'created_on_DESC',
+  ExcerptAsc = 'excerpt_ASC',
+  ExcerptDesc = 'excerpt_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
+  PriceAsc = 'price_ASC',
+  PriceDesc = 'price_DESC',
+  PriceSuffixAsc = 'price_suffix_ASC',
+  PriceSuffixDesc = 'price_suffix_DESC',
+  PublishOn = 'publish_on',
+  PublishOnAsc = 'publish_on_ASC',
+  PublishOnDesc = 'publish_on_DESC',
+  RatingAsc = 'rating_ASC',
+  RatingDesc = 'rating_DESC'
+}
+
+export type ProductWhereInput = {
+  _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _changed_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _created_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
+  _or?: InputMaybe<Array<ProductWhereInput>>;
+  _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
+  _publish_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
+  /** Matches any content item containing the given text term (full-text search). */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  _search_options?: InputMaybe<SearchOptionsInput>;
+  _slug_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  _slug_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with all items from the given list. */
+  _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item tagged with at least one item from the given list. */
+  _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Matches any content item that is tagged. */
+  _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Matches any content item not tagged with an item from the given list. */
+  _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Match on Category fields. */
+  categories?: InputMaybe<CategoryWhereInput>;
+  /** Match items on ID, Slug or Typename of referenced content items. */
+  content?: InputMaybe<Product_ContentWhereInput>;
+  /** Match on CommerceProducts fields. */
+  e_commerce_product?: InputMaybe<CommerceProductsWhereInput>;
+  /** Matches if the field is equal to the given value. */
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  excerpt_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  excerpt_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  excerpt_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  excerpt_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  excerpt_starts_with?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<AssetsWhereInput>;
+  /** Matches if the field is equal to the given value. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field matches any of the given values. */
+  name_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Full fuzzy text search, not case sensitive. */
+  name_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field ends with the given value. */
+  name_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** Excludes with full fuzzy text search, not case sensitive. */
+  name_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field starts with the given value. */
+  name_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field is equal to the given value. */
+  price?: InputMaybe<Scalars['Float']['input']>;
+  /** Matches if the field is greater than the given value. */
+  price_gt?: InputMaybe<Scalars['Float']['input']>;
+  /** Matches if the field is greater than or equal to the given value. */
+  price_gte?: InputMaybe<Scalars['Float']['input']>;
+  /** Matches if the field is less than the given value. */
+  price_lt?: InputMaybe<Scalars['Float']['input']>;
+  /** Matches if the field is less than or equal to the given value. */
+  price_lte?: InputMaybe<Scalars['Float']['input']>;
+  /** Matches if the field is equal to the given value. */
+  price_suffix?: InputMaybe<PriceSuffix>;
+  /** Matches if the field is one of the given values. */
+  price_suffix_any?: InputMaybe<Array<InputMaybe<PriceSuffix>>>;
+  /** Matches if the field ends with the given value. */
+  price_suffix_ends_with?: InputMaybe<PriceSuffix>;
+  /** Matches if the field starts with the given value. */
+  price_suffix_starts_with?: InputMaybe<PriceSuffix>;
+  /** Matches if the field is equal to the given value. */
+  rating?: InputMaybe<Rating>;
+  /** Matches if the field is one of the given values. */
+  rating_any?: InputMaybe<Array<InputMaybe<Rating>>>;
+  /** Matches if the field ends with the given value. */
+  rating_ends_with?: InputMaybe<Rating>;
+  /** Matches if the field starts with the given value. */
+  rating_starts_with?: InputMaybe<Rating>;
+};
+
+export type Product_Content = Cta | Cards | Contact | Faq | Feature | Static;
+
+export type Product_ContentWhereInput = {
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _typename_any?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** List of Products items. */
+export type Products = {
+  __typename?: 'Products';
+  items: Array<Product>;
+  total: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  /** Retrieve a single Article. */
-  Article?: Maybe<Article>;
-  /** Retrieve multiple Articles. */
-  Articles?: Maybe<Articles>;
-  /** Retrieve a single Car. */
-  Car?: Maybe<Car>;
-  /** Retrieve multiple Cars. */
-  Cars?: Maybe<Cars>;
+  /** Retrieve a single Author. */
+  Author?: Maybe<Author>;
+  /** Retrieve multiple Authors. */
+  Authors?: Maybe<Authors>;
+  /** Retrieve multiple Categories. */
+  Categories?: Maybe<Categories>;
   /** Retrieve a single Category. */
   Category?: Maybe<Category>;
-  /** Retrieve multiple Categorys. */
-  Categorys?: Maybe<Categorys>;
-  /** Retrieve content items from all models. */
+  /** Retrieve items from different model types at once. */
   ContentItems?: Maybe<ContentItems>;
+  /** Retrieve a single FAQ. */
+  FAQ?: Maybe<Faq>;
+  /** Retrieve multiple FAQs. */
+  FAQs?: Maybe<FaQs>;
+  /** Retrieve Navigation. */
+  Navigation?: Maybe<Navigation>;
   /** Retrieve a single Page. */
   Page?: Maybe<Page>;
   /** Retrieve multiple Pages. */
   Pages?: Maybe<Pages>;
-  /** Recommendation recipe suitable for recommending Articles which are similar to the giving item */
-  PeopleAlsoViewed_Articles?: Maybe<Articles>;
-  /** Recommendation recipe suitable for recommending Cars which are similar to the giving item */
-  PeopleAlsoViewed_Cars?: Maybe<Cars>;
-  /** Recommendation recipe suitable for recommending Categorys which are similar to the giving item */
-  PeopleAlsoViewed_Categorys?: Maybe<Categorys>;
+  /** Recommendation recipe suitable for recommending Authors which are similar to the giving item */
+  PeopleAlsoViewed_Authors?: Maybe<Authors>;
+  /** Recommendation recipe suitable for recommending Categories which are similar to the giving item */
+  PeopleAlsoViewed_Categories?: Maybe<Categories>;
+  /** Recommendation recipe suitable for recommending FAQs which are similar to the giving item */
+  PeopleAlsoViewed_FAQs?: Maybe<FaQs>;
   /** Recommendation recipe suitable for recommending Pages which are similar to the giving item */
   PeopleAlsoViewed_Pages?: Maybe<Pages>;
+  /** Recommendation recipe suitable for recommending Posts which are similar to the giving item */
+  PeopleAlsoViewed_Posts?: Maybe<Posts>;
+  /** Recommendation recipe suitable for recommending Products which are similar to the giving item */
+  PeopleAlsoViewed_Products?: Maybe<Products>;
   /** Recommendation recipe suitable for recommending Redirects which are similar to the giving item */
   PeopleAlsoViewed_Redirects?: Maybe<Redirects>;
-  /** Recommendation recipe suitable for recommending SectionCarRecommendationss which are similar to the giving item */
-  PeopleAlsoViewed_SectionCarRecommendationss?: Maybe<SectionCarRecommendationss>;
-  /** Recommendation recipe suitable for recommending globally popular Articles */
-  Popular_Articles?: Maybe<Articles>;
-  /** Recommendation recipe suitable for recommending globally popular Cars */
-  Popular_Cars?: Maybe<Cars>;
-  /** Recommendation recipe suitable for recommending globally popular Categorys */
-  Popular_Categorys?: Maybe<Categorys>;
+  /** Recommendation recipe suitable for recommending globally popular Authors */
+  Popular_Authors?: Maybe<Authors>;
+  /** Recommendation recipe suitable for recommending globally popular Categories */
+  Popular_Categories?: Maybe<Categories>;
+  /** Recommendation recipe suitable for recommending globally popular FAQs */
+  Popular_FAQs?: Maybe<FaQs>;
   /** Recommendation recipe suitable for recommending globally popular Pages */
   Popular_Pages?: Maybe<Pages>;
+  /** Recommendation recipe suitable for recommending globally popular Posts */
+  Popular_Posts?: Maybe<Posts>;
+  /** Recommendation recipe suitable for recommending globally popular Products */
+  Popular_Products?: Maybe<Products>;
   /** Recommendation recipe suitable for recommending globally popular Redirects */
   Popular_Redirects?: Maybe<Redirects>;
-  /** Recommendation recipe suitable for recommending globally popular SectionCarRecommendationss */
-  Popular_SectionCarRecommendationss?: Maybe<SectionCarRecommendationss>;
+  /** Retrieve a single Post. */
+  Post?: Maybe<Post>;
+  /** Retrieve multiple Posts. */
+  Posts?: Maybe<Posts>;
+  /** Retrieve a single Product. */
+  Product?: Maybe<Product>;
+  /** Retrieve multiple Products. */
+  Products?: Maybe<Products>;
   /** Retrieve a single Redirect. */
   Redirect?: Maybe<Redirect>;
   /** Retrieve multiple Redirects. */
   Redirects?: Maybe<Redirects>;
-  /** Retrieve a single SectionCarRecommendations. */
-  SectionCarRecommendations?: Maybe<SectionCarRecommendations>;
-  /** Retrieve multiple SectionCarRecommendationss. */
-  SectionCarRecommendationss?: Maybe<SectionCarRecommendationss>;
-  /** Recommendation recipe suitable for recommending Articles which are similar to the giving item */
-  Similar_Articles?: Maybe<Articles>;
-  /** Recommendation recipe suitable for recommending Cars which are similar to the giving item */
-  Similar_Cars?: Maybe<Cars>;
-  /** Recommendation recipe suitable for recommending Categorys which are similar to the giving item */
-  Similar_Categorys?: Maybe<Categorys>;
+  /** Recommendation recipe suitable for recommending Authors which are similar to the giving item */
+  Similar_Authors?: Maybe<Authors>;
+  /** Recommendation recipe suitable for recommending Categories which are similar to the giving item */
+  Similar_Categories?: Maybe<Categories>;
+  /** Recommendation recipe suitable for recommending FAQs which are similar to the giving item */
+  Similar_FAQs?: Maybe<FaQs>;
   /** Recommendation recipe suitable for recommending Pages which are similar to the giving item */
   Similar_Pages?: Maybe<Pages>;
+  /** Recommendation recipe suitable for recommending Posts which are similar to the giving item */
+  Similar_Posts?: Maybe<Posts>;
+  /** Recommendation recipe suitable for recommending Products which are similar to the giving item */
+  Similar_Products?: Maybe<Products>;
   /** Recommendation recipe suitable for recommending Redirects which are similar to the giving item */
   Similar_Redirects?: Maybe<Redirects>;
-  /** Recommendation recipe suitable for recommending SectionCarRecommendationss which are similar to the giving item */
-  Similar_SectionCarRecommendationss?: Maybe<SectionCarRecommendationss>;
+  /** Retrieve the list of Prepr segments for the Preview Next.js preview bar. */
+  _Segments?: Maybe<Array<_Segment>>;
 };
 
 
-export type QueryArticleArgs = {
+export type QueryAuthorArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   locale?: Scalars['String']['input'];
   locales?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -868,31 +1312,23 @@ export type QueryArticleArgs = {
 };
 
 
-export type QueryArticlesArgs = {
+export type QueryAuthorsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: Scalars['String']['input'];
   locales?: InputMaybe<Array<Scalars['String']['input']>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<ArticleSortInput>;
-  where?: InputMaybe<ArticleWhereInput>;
+  sort?: InputMaybe<AuthorSortInput>;
+  where?: InputMaybe<AuthorWhereInput>;
 };
 
 
-export type QueryCarArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
-  locale?: Scalars['String']['input'];
-  locales?: InputMaybe<Array<Scalars['String']['input']>>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryCarsArgs = {
+export type QueryCategoriesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: Scalars['String']['input'];
   locales?: InputMaybe<Array<Scalars['String']['input']>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<CarSortInput>;
-  where?: InputMaybe<CarWhereInput>;
+  sort?: InputMaybe<CategorySortInput>;
+  where?: InputMaybe<CategoryWhereInput>;
 };
 
 
@@ -904,16 +1340,6 @@ export type QueryCategoryArgs = {
 };
 
 
-export type QueryCategorysArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: Scalars['String']['input'];
-  locales?: InputMaybe<Array<Scalars['String']['input']>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<CategorySortInput>;
-  where?: InputMaybe<CategoryWhereInput>;
-};
-
-
 export type QueryContentItemsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -921,6 +1347,30 @@ export type QueryContentItemsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<ContentItemsSortInput>;
   where?: InputMaybe<ContentItemsWhereInput>;
+};
+
+
+export type QueryFaqArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFaQsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<FaqSortInput>;
+  where?: InputMaybe<FaqWhereInput>;
+};
+
+
+export type QueryNavigationArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -942,29 +1392,18 @@ export type QueryPagesArgs = {
 };
 
 
-export type QueryPeopleAlsoViewed_ArticlesArgs = {
+export type QueryPeopleAlsoViewed_AuthorsArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   rules?: InputMaybe<SimilarRulesInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ArticleWhereInput>;
+  where?: InputMaybe<AuthorWhereInput>;
 };
 
 
-export type QueryPeopleAlsoViewed_CarsArgs = {
-  id: Scalars['String']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  rules?: InputMaybe<SimilarRulesInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CarWhereInput>;
-};
-
-
-export type QueryPeopleAlsoViewed_CategorysArgs = {
+export type QueryPeopleAlsoViewed_CategoriesArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -972,6 +1411,17 @@ export type QueryPeopleAlsoViewed_CategorysArgs = {
   rules?: InputMaybe<SimilarRulesInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+export type QueryPeopleAlsoViewed_FaQsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FaqWhereInput>;
 };
 
 
@@ -986,6 +1436,28 @@ export type QueryPeopleAlsoViewed_PagesArgs = {
 };
 
 
+export type QueryPeopleAlsoViewed_PostsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type QueryPeopleAlsoViewed_ProductsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
+};
+
+
 export type QueryPeopleAlsoViewed_RedirectsArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -997,44 +1469,33 @@ export type QueryPeopleAlsoViewed_RedirectsArgs = {
 };
 
 
-export type QueryPeopleAlsoViewed_SectionCarRecommendationssArgs = {
-  id: Scalars['String']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  rules?: InputMaybe<SimilarRulesInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<SectionCarRecommendationsWhereInput>;
-};
-
-
-export type QueryPopular_ArticlesArgs = {
+export type QueryPopular_AuthorsArgs = {
   events?: InputMaybe<Array<InputMaybe<_Event>>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ArticleWhereInput>;
+  where?: InputMaybe<AuthorWhereInput>;
 };
 
 
-export type QueryPopular_CarsArgs = {
-  events?: InputMaybe<Array<InputMaybe<_Event>>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CarWhereInput>;
-};
-
-
-export type QueryPopular_CategorysArgs = {
+export type QueryPopular_CategoriesArgs = {
   events?: InputMaybe<Array<InputMaybe<_Event>>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+export type QueryPopular_FaQsArgs = {
+  events?: InputMaybe<Array<InputMaybe<_Event>>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FaqWhereInput>;
 };
 
 
@@ -1048,6 +1509,26 @@ export type QueryPopular_PagesArgs = {
 };
 
 
+export type QueryPopular_PostsArgs = {
+  events?: InputMaybe<Array<InputMaybe<_Event>>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type QueryPopular_ProductsArgs = {
+  events?: InputMaybe<Array<InputMaybe<_Event>>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
+};
+
+
 export type QueryPopular_RedirectsArgs = {
   events?: InputMaybe<Array<InputMaybe<_Event>>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1058,13 +1539,39 @@ export type QueryPopular_RedirectsArgs = {
 };
 
 
-export type QueryPopular_SectionCarRecommendationssArgs = {
-  events?: InputMaybe<Array<InputMaybe<_Event>>>;
+export type QueryPostArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPostsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<SectionCarRecommendationsWhereInput>;
+  sort?: InputMaybe<PostSortInput>;
+  where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type QueryProductArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: Scalars['String']['input'];
+  locales?: InputMaybe<Array<Scalars['String']['input']>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<ProductSortInput>;
+  where?: InputMaybe<ProductWhereInput>;
 };
 
 
@@ -1086,47 +1593,18 @@ export type QueryRedirectsArgs = {
 };
 
 
-export type QuerySectionCarRecommendationsArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
-  locale?: Scalars['String']['input'];
-  locales?: InputMaybe<Array<Scalars['String']['input']>>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QuerySectionCarRecommendationssArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: Scalars['String']['input'];
-  locales?: InputMaybe<Array<Scalars['String']['input']>>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<SectionCarRecommendationsSortInput>;
-  where?: InputMaybe<SectionCarRecommendationsWhereInput>;
-};
-
-
-export type QuerySimilar_ArticlesArgs = {
+export type QuerySimilar_AuthorsArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
   locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   rules?: InputMaybe<SimilarRulesInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<ArticleWhereInput>;
+  where?: InputMaybe<AuthorWhereInput>;
 };
 
 
-export type QuerySimilar_CarsArgs = {
-  id: Scalars['String']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  rules?: InputMaybe<SimilarRulesInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<CarWhereInput>;
-};
-
-
-export type QuerySimilar_CategorysArgs = {
+export type QuerySimilar_CategoriesArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -1134,6 +1612,17 @@ export type QuerySimilar_CategorysArgs = {
   rules?: InputMaybe<SimilarRulesInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+export type QuerySimilar_FaQsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<FaqWhereInput>;
 };
 
 
@@ -1148,6 +1637,28 @@ export type QuerySimilar_PagesArgs = {
 };
 
 
+export type QuerySimilar_PostsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PostWhereInput>;
+};
+
+
+export type QuerySimilar_ProductsArgs = {
+  id: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  rules?: InputMaybe<SimilarRulesInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ProductWhereInput>;
+};
+
+
 export type QuerySimilar_RedirectsArgs = {
   id: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1158,84 +1669,69 @@ export type QuerySimilar_RedirectsArgs = {
   where?: InputMaybe<RedirectWhereInput>;
 };
 
-
-export type QuerySimilar_SectionCarRecommendationssArgs = {
-  id: Scalars['String']['input'];
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  locale?: InputMaybe<Scalars['String']['input']>;
-  locales?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  rules?: InputMaybe<SimilarRulesInput>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  where?: InputMaybe<SectionCarRecommendationsWhereInput>;
-};
-
 export type Quote = {
   __typename?: 'Quote';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
   author?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
 };
+
+/** Rating. */
+export enum Rating {
+  /** 5 */
+  Five = 'FIVE',
+  /** 4 */
+  Four = 'FOUR',
+  /** 1 */
+  One = 'ONE',
+  /** 3 */
+  Three = 'THREE',
+  /** 2 */
+  Two = 'TWO'
+}
 
 /** Single Redirect. */
 export type Redirect = Model & {
   __typename?: 'Redirect';
   /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
+  _bookmarks: Scalars['Int']['output'];
   /** The time the content item was changed. */
   _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
   _context?: Maybe<Context>;
   /** The time the content item was created. */
   _created_on: Scalars['String']['output'];
   /** Id of your Prepr Environment. */
   _environment_id: Scalars['String']['output'];
+  /** Count of view events. */
+  _event: Scalars['Int']['output'];
   /** Unique identifier for each content item. */
   _id: Scalars['String']['output'];
+  _last_published_on?: Maybe<Scalars['String']['output']>;
   /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
+  _likes: Scalars['Int']['output'];
   _locale: Scalars['String']['output'];
   _locales: Array<Scalars['String']['output']>;
   /** This field returns all localizations for this content item. */
   _localizations: Array<Redirect>;
   /** The time for when the content item is or will be published. */
   _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
   /** Calculated time to read in minutes. */
   _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
   /** Unique within Type, string identifier for each content item. */
   _slug?: Maybe<Scalars['String']['output']>;
   /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
+  _subscribes: Scalars['Int']['output'];
   /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
-  destination: Array<Page>;
-  redirect_type?: Maybe<Scalars['Boolean']['output']>;
-  source: Scalars['String']['output'];
+  _views: Scalars['Int']['output'];
+  destination: Array<Redirect_Destination>;
+  internal_title?: Maybe<Scalars['String']['output']>;
+  redirect_type?: Maybe<RedirectType>;
+};
+
+
+/** Single Redirect. */
+export type Redirect_EventArgs = {
+  name?: _Event;
 };
 
 export enum RedirectSortInput {
@@ -1245,11 +1741,21 @@ export enum RedirectSortInput {
   CreatedOn = 'created_on',
   CreatedOnAsc = 'created_on_ASC',
   CreatedOnDesc = 'created_on_DESC',
+  InternalTitleAsc = 'internal_title_ASC',
+  InternalTitleDesc = 'internal_title_DESC',
   PublishOn = 'publish_on',
   PublishOnAsc = 'publish_on_ASC',
   PublishOnDesc = 'publish_on_DESC',
-  SourceAsc = 'source_ASC',
-  SourceDesc = 'source_DESC'
+  RedirectTypeAsc = 'redirect_type_ASC',
+  RedirectTypeDesc = 'redirect_type_DESC'
+}
+
+/** RedirectType. */
+export enum RedirectType {
+  /** Permanent (301) */
+  Permanent = 'PERMANENT',
+  /** Temporary (302) */
+  Temporary = 'TEMPORARY'
 }
 
 export type RedirectWhereInput = {
@@ -1284,209 +1790,8 @@ export type RedirectWhereInput = {
   _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
   /** Matches any content item not tagged with an item from the given list. */
   _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Match on Page fields. */
-  destination?: InputMaybe<PageWhereInput>;
-  /** Matches if the field is equal to the given value. */
-  redirect_type?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Matches if the field is equal to the given value. */
-  source?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field matches any of the given values. */
-  source_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Full fuzzy text search, not case sensitive. */
-  source_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field ends with the given value. */
-  source_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** Excludes with full fuzzy text search, not case sensitive. */
-  source_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field starts with the given value. */
-  source_starts_with?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** List of Redirects items. */
-export type Redirects = {
-  __typename?: 'Redirects';
-  items: Array<Redirect>;
-  total: Scalars['Int']['output'];
-};
-
-export type Resource = {
-  __typename?: 'Resource';
-  _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
-};
-
-/** SEO component. */
-export type Seo = Component & {
-  __typename?: 'SEO';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  meta_description?: Maybe<Scalars['String']['output']>;
-  meta_titel?: Maybe<Scalars['String']['output']>;
-};
-
-export type SearchOptionsInput = {
-  includeNumeric?: InputMaybe<Scalars['Boolean']['input']>;
-  includeReferences?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** SectionAboutLease component. */
-export type SectionAboutLease = Component & {
-  __typename?: 'SectionAboutLease';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-/** SectionBenefits component. */
-export type SectionBenefits = Component & {
-  __typename?: 'SectionBenefits';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-/** SectionBlogContent component. */
-export type SectionBlogContent = Component & {
-  __typename?: 'SectionBlogContent';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-};
-
-/** Single SectionCarRecommendations. */
-export type SectionCarRecommendations = Model & {
-  __typename?: 'SectionCarRecommendations';
-  /** Count of bookmark events. */
-  _bookmarks?: Maybe<Scalars['Int']['output']>;
-  /** The time the content item was changed. */
-  _changed_on: Scalars['String']['output'];
-  /**
-   * Count of clicktrough events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _clicktroughs?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of comment events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _comments?: Maybe<Scalars['Int']['output']>;
-  _context?: Maybe<Context>;
-  /** The time the content item was created. */
-  _created_on: Scalars['String']['output'];
-  /** Id of your Prepr Environment. */
-  _environment_id: Scalars['String']['output'];
-  /** Unique identifier for each content item. */
-  _id: Scalars['String']['output'];
-  /** Count of like events. */
-  _likes?: Maybe<Scalars['Int']['output']>;
-  _locale: Scalars['String']['output'];
-  _locales: Array<Scalars['String']['output']>;
-  /** This field returns all localizations for this content item. */
-  _localizations: Array<SectionCarRecommendations>;
-  /** The time for when the content item is or will be published. */
-  _publish_on?: Maybe<Scalars['String']['output']>;
-  /**
-   * Count of purchase events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _purchases?: Maybe<Scalars['Int']['output']>;
-  /** Calculated time to read in minutes. */
-  _read_time?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of share events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _shares?: Maybe<Scalars['Int']['output']>;
-  /** Unique within Type, string identifier for each content item. */
-  _slug?: Maybe<Scalars['String']['output']>;
-  /** Count of subscribe events. */
-  _subscribes?: Maybe<Scalars['Int']['output']>;
-  /** Count of view events. */
-  _views?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Count of vote events.
-   * @deprecated Will be removed in next version, use _event instead.
-   */
-  _votes?: Maybe<Scalars['Int']['output']>;
-  cars: Array<Car>;
-  cta_button?: Maybe<CtaButton>;
-  heading?: Maybe<Scalars['String']['output']>;
-  internal_title?: Maybe<Scalars['String']['output']>;
-};
-
-
-/** Single SectionCarRecommendations. */
-export type SectionCarRecommendationsCarsArgs = {
-  personalize?: Scalars['Boolean']['input'];
-  personalize_for_country?: InputMaybe<Scalars['String']['input']>;
-  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-export enum SectionCarRecommendationsSortInput {
-  ChangedOn = 'changed_on',
-  ChangedOnAsc = 'changed_on_ASC',
-  ChangedOnDesc = 'changed_on_DESC',
-  CreatedOn = 'created_on',
-  CreatedOnAsc = 'created_on_ASC',
-  CreatedOnDesc = 'created_on_DESC',
-  HeadingAsc = 'heading_ASC',
-  HeadingDesc = 'heading_DESC',
-  InternalTitleAsc = 'internal_title_ASC',
-  InternalTitleDesc = 'internal_title_DESC',
-  PublishOn = 'publish_on',
-  PublishOnAsc = 'publish_on_ASC',
-  PublishOnDesc = 'publish_on_DESC'
-}
-
-export type SectionCarRecommendationsWhereInput = {
-  _changed_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _changed_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _created_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  /** Matches if the Id field is equal to one of the items in the given list. */
-  _id_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches if the Id field is not equal to one of the items in the given list. */
-  _id_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** The `_or` filter returns a filter value if at least one of the clause in the _or is true. This beta filter currently supports the Id, Slug, Created On, Changed On, Published On, Text, Integer, Float, Boolean, and DateTime field types, for references only Text, Integer, Float, Boolean and exists (at least one item) fields are supported. */
-  _or?: InputMaybe<Array<SectionCarRecommendationsWhereInput>>;
-  _publish_on_gt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_gte?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_lt?: InputMaybe<Scalars['_DateTime']['input']>;
-  _publish_on_lte?: InputMaybe<Scalars['_DateTime']['input']>;
-  /** Matches any content item containing the given text term (full-text search). */
-  _search?: InputMaybe<Scalars['String']['input']>;
-  _search_options?: InputMaybe<SearchOptionsInput>;
-  _slug_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  _slug_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item tagged with all items from the given list. */
-  _tags_all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item tagged with at least one item from the given list. */
-  _tags_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Matches any content item that is tagged. */
-  _tags_has?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Matches any content item not tagged with an item from the given list. */
-  _tags_nany?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Match on Car fields. */
-  cars?: InputMaybe<CarWhereInput>;
-  /** Matches if the field is equal to the given value. */
-  heading?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field matches any of the given values. */
-  heading_any?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Full fuzzy text search, not case sensitive. */
-  heading_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field ends with the given value. */
-  heading_ends_with?: InputMaybe<Scalars['String']['input']>;
-  /** Excludes with full fuzzy text search, not case sensitive. */
-  heading_not_contains?: InputMaybe<Scalars['String']['input']>;
-  /** Matches if the field starts with the given value. */
-  heading_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Match items on ID, Slug or Typename of referenced content items. */
+  destination?: InputMaybe<Redirect_DestinationWhereInput>;
   /** Matches if the field is equal to the given value. */
   internal_title?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field matches any of the given values. */
@@ -1499,71 +1804,56 @@ export type SectionCarRecommendationsWhereInput = {
   internal_title_not_contains?: InputMaybe<Scalars['String']['input']>;
   /** Matches if the field starts with the given value. */
   internal_title_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** Matches if the field is equal to the given value. */
+  redirect_type?: InputMaybe<RedirectType>;
+  /** Matches if the field is one of the given values. */
+  redirect_type_any?: InputMaybe<Array<InputMaybe<RedirectType>>>;
+  /** Matches if the field ends with the given value. */
+  redirect_type_ends_with?: InputMaybe<RedirectType>;
+  /** Matches if the field starts with the given value. */
+  redirect_type_starts_with?: InputMaybe<RedirectType>;
 };
 
-/** List of SectionCarRecommendationss items. */
-export type SectionCarRecommendationss = {
-  __typename?: 'SectionCarRecommendationss';
-  items: Array<SectionCarRecommendations>;
+export type Redirect_Destination = Page | Post | Product;
+
+export type Redirect_DestinationWhereInput = {
+  /** Matches if the Id field is equal to one of the items in the given list. */
+  _id_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Matches if the Id field is not equal to one of the items in the given list. */
+  _id_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _slug_nany?: InputMaybe<Array<Scalars['String']['input']>>;
+  _typename_any?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** List of Redirects items. */
+export type Redirects = {
+  __typename?: 'Redirects';
+  items: Array<Redirect>;
   total: Scalars['Int']['output'];
 };
 
-/** SectionConsultation component. */
-export type SectionConsultation = Component & {
-  __typename?: 'SectionConsultation';
-  _context?: Maybe<Context>;
+export type Resource = {
+  __typename?: 'Resource';
   _id: Scalars['String']['output'];
+  body?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
-/** SectionFaq component. */
-export type SectionFaq = Component & {
-  __typename?: 'SectionFaq';
+/** SEO component. */
+export type Seo = Component & {
+  __typename?: 'SEO';
   _context?: Maybe<Context>;
   _id: Scalars['String']['output'];
-  title?: Maybe<Scalars['String']['output']>;
+  meta_description?: Maybe<Scalars['String']['output']>;
+  meta_image?: Maybe<Asset>;
+  meta_title?: Maybe<Scalars['String']['output']>;
 };
 
-/** SectionHeader component. */
-export type SectionHeader = Component & {
-  __typename?: 'SectionHeader';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  cta_button?: Maybe<CtaButton>;
-  image?: Maybe<Asset>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-/** SectionHowItWorks component. */
-export type SectionHowItWorks = Component & {
-  __typename?: 'SectionHowItWorks';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-/** SectionHowToGetACar component. */
-export type SectionHowToGetACar = Component & {
-  __typename?: 'SectionHowToGetACar';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-};
-
-/** SectionImageAndText component. */
-export type SectionImageAndText = Component & {
-  __typename?: 'SectionImageAndText';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
-  align?: Maybe<Scalars['String']['output']>;
-  cta_button?: Maybe<CtaButton>;
-  test?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-/** SectionTestimonials component. */
-export type SectionTestimonials = Component & {
-  __typename?: 'SectionTestimonials';
-  _context?: Maybe<Context>;
-  _id: Scalars['String']['output'];
+export type SearchOptionsInput = {
+  includeNumeric?: InputMaybe<Scalars['Boolean']['input']>;
+  includeReferences?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type SimilarRulesInput = {
@@ -1578,24 +1868,39 @@ export type SimilarRulesInput = {
 export type SoundCloudPost = {
   __typename?: 'SoundCloudPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
 
 export type SpotifyPlaylist = {
   __typename?: 'SpotifyPlaylist';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
+
+/** Static component. */
+export type Static = Component & {
+  __typename?: 'Static';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  static_type?: Maybe<StaticComponent>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** StaticComponent. */
+export enum StaticComponent {
+  /** Benefits */
+  Benefits = 'BENEFITS',
+  /** Explanation */
+  Explanation = 'EXPLANATION',
+  /** Steps */
+  Steps = 'STEPS',
+  /** Testimonials */
+  Testimonials = 'TESTIMONIALS'
+}
 
 export type Text = {
   __typename?: 'Text';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   format?: Maybe<TextFormat>;
   html?: Maybe<Scalars['String']['output']>;
@@ -1613,86 +1918,95 @@ export enum TextFormat {
   Html = 'HTML'
 }
 
+export type ThreadsPost = {
+  __typename?: 'ThreadsPost';
+  _id: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
 export type TikTokPost = {
   __typename?: 'TikTokPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
 
 export type TwitterPost = {
   __typename?: 'TwitterPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
+};
+
+/** Embedded Typeform form. */
+export type TypeformEmbed = {
+  __typename?: 'TypeformEmbed';
+  _id: Scalars['String']['output'];
+  /** Typeform form ID */
+  embed_id: Scalars['String']['output'];
 };
 
 export type VimeoPost = {
   __typename?: 'VimeoPost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
 
 export type YouTubePost = {
   __typename?: 'YouTubePost';
   _id: Scalars['String']['output'];
-  /** @deprecated Will be removed in next version, use __typename instead. */
-  _type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
 };
 
 /** Event type is specifying the kind of event the customer has with your content. */
 export enum _Event {
   Bookmark = 'Bookmark',
   Click = 'Click',
-  ClickedCampaign = 'ClickedCampaign',
   Clickthrough = 'Clickthrough',
   Comment = 'Comment',
-  Conversion = 'Conversion',
   Impression = 'Impression',
   Like = 'Like',
   Purchase = 'Purchase',
-  QuoteRequest = 'Quote_Request',
   Share = 'Share',
-  SignUp = 'SignUp',
   Subscribe = 'Subscribe',
   View = 'View',
   Vote = 'Vote'
 }
 
+export type _Segment = {
+  __typename?: '_Segment';
+  _id?: Maybe<Scalars['String']['output']>;
+  api_id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 /** This union type contains all components and remote sources. */
-export type _Prepr_Types = ApplePodcast | Assets | CtaButton | Coordinates | FacebookPost | InstagramPost | NavigationItem | Quote | Resource | Seo | SectionAboutLease | SectionBenefits | SectionBlogContent | SectionConsultation | SectionFaq | SectionHeader | SectionHowItWorks | SectionHowToGetACar | SectionImageAndText | SectionTestimonials | SoundCloudPost | SpotifyPlaylist | Text | TikTokPost | TwitterPost | VimeoPost | YouTubePost;
+export type _Prepr_Types = ApplePodcast | Assets | BlueskyPost | Button | Cta | Cards | CommerceProductsCollection | Contact | Coordinates | FaqQuestion | FacebookPost | Feature | Hero | HubSpotEmbed | InstagramPost | NavigationItem | Quote | Resource | Seo | SoundCloudPost | SpotifyPlaylist | Static | Text | ThreadsPost | TikTokPost | TwitterPost | TypeformEmbed | VimeoPost | YouTubePost;
 
 export type GetPageBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetPageBySlugQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', _id: string, title?: string | null, _slug?: string | null, stack: Array<{ __typename: 'SectionAboutLease' } | { __typename: 'SectionBenefits' } | { __typename: 'SectionBlogContent' } | { __typename: 'SectionCarRecommendations' } | { __typename: 'SectionConsultation' } | { __typename: 'SectionFaq' } | (
-      { __typename: 'SectionHeader' }
-      & { ' $fragmentRefs'?: { 'SectionHeaderFragmentFragment': SectionHeaderFragmentFragment } }
-    ) | { __typename: 'SectionHowItWorks' } | { __typename: 'SectionHowToGetACar' } | (
-      { __typename: 'SectionImageAndText' }
-      & { ' $fragmentRefs'?: { 'SectionImageAndTextFragmentFragment': SectionImageAndTextFragmentFragment } }
-    ) | { __typename: 'SectionTestimonials' }> } | null };
+export type GetPageBySlugQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', title?: string | null, _id: string, content: Array<{ __typename: 'CTA' } | { __typename: 'Cards' } | { __typename: 'Contact' } | { __typename: 'FAQ' } | (
+      { __typename: 'Feature' }
+      & { ' $fragmentRefs'?: { 'FeatureFragment': FeatureFragment } }
+    ) | (
+      { __typename: 'Hero' }
+      & { ' $fragmentRefs'?: { 'HeroFragment': HeroFragment } }
+    ) | { __typename: 'Static' }> } | null };
 
-export type SectionImageAndTextFragmentFragment = { __typename?: 'SectionImageAndText', title?: string | null, _id: string, align?: string | null, _context?: { __typename?: 'Context', variant_id?: string | null, variant_key?: string | null } | null, cta_button?: (
-    { __typename?: 'CTAButton' }
-    & { ' $fragmentRefs'?: { 'CtaButtonFragmentFragment': CtaButtonFragmentFragment } }
-  ) | null } & { ' $fragmentName'?: 'SectionImageAndTextFragmentFragment' };
+export type FeatureFragment = { __typename?: 'Feature', _id: string, heading?: string | null, sub_heading?: string | null, image_position?: ImagePosition | null, button?: (
+    { __typename?: 'Button' }
+    & { ' $fragmentRefs'?: { 'ButtonFragment': ButtonFragment } }
+  ) | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, image?: { __typename?: 'Asset', url?: string | null } | null } & { ' $fragmentName'?: 'FeatureFragment' };
 
-export type SectionHeaderFragmentFragment = { __typename?: 'SectionHeader', title?: string | null, _id: string, _context?: { __typename?: 'Context', variant_id?: string | null, group_id?: string | null, variant_key?: string | null } | null, image?: { __typename?: 'Asset', url?: string | null, caption?: string | null } | null, cta_button?: (
-    { __typename?: 'CTAButton' }
-    & { ' $fragmentRefs'?: { 'CtaButtonFragmentFragment': CtaButtonFragmentFragment } }
-  ) | null } & { ' $fragmentName'?: 'SectionHeaderFragmentFragment' };
+export type HeroFragment = { __typename?: 'Hero', _id: string, sub_heading?: string | null, heading?: string | null, image?: { __typename?: 'Asset', url?: string | null, height?: number | null, width?: number | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, buttons: Array<(
+    { __typename?: 'Button' }
+    & { ' $fragmentRefs'?: { 'ButtonFragment': ButtonFragment } }
+  )> } & { ' $fragmentName'?: 'HeroFragment' };
 
-export type CtaButtonFragmentFragment = { __typename?: 'CTAButton', link?: string | null, text?: string | null, internal_link: Array<{ __typename?: 'Page', _slug?: string | null }> } & { ' $fragmentName'?: 'CtaButtonFragmentFragment' };
+export type ButtonFragment = { __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null } & { ' $fragmentName'?: 'ButtonFragment' };
 
-export const CtaButtonFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CTAButtonFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CTAButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"internal_link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]} as unknown as DocumentNode<CtaButtonFragmentFragment, unknown>;
-export const SectionImageAndTextFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SectionImageAndTextFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionImageAndText"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_id"}},{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"cta_button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CTAButtonFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"align"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CTAButtonFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CTAButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"internal_link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]} as unknown as DocumentNode<SectionImageAndTextFragmentFragment, unknown>;
-export const SectionHeaderFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SectionHeaderFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionHeader"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cta_button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CTAButtonFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CTAButtonFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CTAButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"internal_link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]} as unknown as DocumentNode<SectionHeaderFragmentFragment, unknown>;
-export const GetPageBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPageBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"_slug"}},{"kind":"Field","name":{"kind":"Name","value":"stack"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionImageAndText"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SectionImageAndTextFragment"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionHeader"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SectionHeaderFragment"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CTAButtonFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CTAButton"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"internal_link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SectionImageAndTextFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionImageAndText"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_id"}},{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"cta_button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CTAButtonFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"align"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SectionHeaderFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SectionHeader"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cta_button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CTAButtonFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}}]} as unknown as DocumentNode<GetPageBySlugQuery, GetPageBySlugQueryVariables>;
+export const ButtonFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}}]} as unknown as DocumentNode<ButtonFragment, unknown>;
+export const FeatureFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Feature"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"heading"}},{"kind":"Field","name":{"kind":"Name","value":"sub_heading"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image_position"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"width"},"value":{"kind":"IntValue","value":"870"}},{"kind":"Argument","name":{"kind":"Name","value":"height"},"value":{"kind":"IntValue","value":"570"}}]}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}}]} as unknown as DocumentNode<FeatureFragment, unknown>;
+export const HeroFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Hero"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"sub_heading"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"preset"},"value":{"kind":"StringValue","value":"Hero","block":false}},{"kind":"Argument","name":{"kind":"Name","value":"width"},"value":{"kind":"IntValue","value":"2000"}}]},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"heading"}},{"kind":"Field","name":{"kind":"Name","value":"buttons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}}]} as unknown as DocumentNode<HeroFragment, unknown>;
+export const GetPageBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPageBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Hero"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Feature"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Hero"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"sub_heading"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"preset"},"value":{"kind":"StringValue","value":"Hero","block":false}},{"kind":"Argument","name":{"kind":"Name","value":"width"},"value":{"kind":"IntValue","value":"2000"}}]},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"heading"}},{"kind":"Field","name":{"kind":"Name","value":"buttons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Button"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Feature"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"heading"}},{"kind":"Field","name":{"kind":"Name","value":"sub_heading"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image_position"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"width"},"value":{"kind":"IntValue","value":"870"}},{"kind":"Argument","name":{"kind":"Name","value":"height"},"value":{"kind":"IntValue","value":"570"}}]}]}}]}}]} as unknown as DocumentNode<GetPageBySlugQuery, GetPageBySlugQueryVariables>;
