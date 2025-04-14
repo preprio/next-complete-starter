@@ -22,7 +22,7 @@ pnpm install --shamefully-hoist
 Copy the .env.example file in this directory to .env (which will be ignored by Git) by running the following command:
 
 ```bash
-cp .env.example .env.
+cp .env.example .env
 ```
 
 ## Update the environment file
