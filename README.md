@@ -26,10 +26,16 @@ cp .env.example .env
 ```
 
 ## Update the environment file
-In the .env file, replace `<YOUR_PREPR_GRAPHQL_URL>` with the *API URL* of the Prepr *GraphQL Preview* access token from your Acme Lease Demo environment.
+
+In the `.env` file, replace `<YOUR_PREPR_GRAPHQL_URL>` with the *API URL* of the Prepr *GraphQL Preview* access token from your Acme Lease Demo environment.
 
 ![preview API URL](https://assets-site.prepr.io//35k5a4g45wuy-preview-access-token.png)
 
+## Update the code generator schema 
+
+In the `codegen.ts` file, replace the schema value `<YOUR_PREPR_GRAPHQL_URL>` with the *API URL* of the Prepr *GraphQL Preview* access token from your Acme Lease Demo environment.
+
+![preview API URL](https://assets-site.prepr.io//35k5a4g45wuy-preview-access-token.png)
 
 ## Add the Prepr tracking pixel
 
