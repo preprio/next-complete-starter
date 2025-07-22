@@ -2,12 +2,9 @@
 
 import Logo from '@/components/logo'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import Button from "@/components/button";
 
 export default function NavBar() {
-  const router = useRouter()
-
   const navItems = [
     {
       text: 'Find a car',

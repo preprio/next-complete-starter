@@ -21,7 +21,7 @@ export default function FeatureSection(props: { item: FragmentType<typeof FEATUR
             <h2 className="text-mb-4xl lg:text-5xl font-medium text-secondary-700 text-balance">
               {item.heading}
             </h2>
-            <p className="text-lg mt-4 xl:mt-6 font-medium text-wrap text-balance">
+            <p className="text-lg mt-4 xl:mt-6 font-medium text-balance">
               {item.sub_heading}
             </p>
             <Link href='#'>

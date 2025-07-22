@@ -8,7 +8,7 @@ import Script from 'next/script'
 import { getToolbarProps, extractAccessToken } from '@preprio/prepr-nextjs/server'
  
 // Import the PreprToolbar component & provider
-import { PreprToolbar, PreprToolbarProvider} from '@preprio/prepr-nextjs/react'
+import { PreprToolbar, PreprToolbarProvider, PreprTrackingPixel} from '@preprio/prepr-nextjs/react'
  
 // Import the CSS for the PreprToolbar
 import '@preprio/prepr-nextjs/index.css'
@@ -25,15 +25,12 @@ export default async function RootLayout({children,}: {children: React.ReactNode
     // Get the props for the PreprToolbar component and check that the environment variable is set to preview
     const isPreview = process.env.PREPR_ENV === 'preview'
     const toolbarProps = isPreview ? await getToolbarProps(process.env.PREPR_GRAPHQL_URL!) : null
- 
-    return (
+    const accessToken = extractAccessToken(process.env.PREPR_GRAPHQL_URL!)
+    
+  return (
       <html lang="en">
       <head>
-        <Script
-          id={'prepr_script'}
-          dangerouslySetInnerHTML={{
-            __html: `YOUR-PREPR-TRACKING-CODE`,
-          }}></Script>
+        <PreprTrackingPixel accessToken={accessToken!}/>
       </head>
       <body className={ubuntu.className}>
         {isPreview && toolbarProps ? (
