@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server'
-import { PreprMiddleware } from '@preprio/prepr-nextjs'
+import type { NextRequest } from 'next/server'
+import createPreprMiddleware from '@preprio/prepr-nextjs/middleware'
 
 export function middleware(request: NextRequest) {
-  return PreprMiddleware(request)
+  return createPreprMiddleware(request, { preview: true })
 }

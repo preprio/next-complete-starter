@@ -4,7 +4,7 @@ import FeatureSection from "@/components/sections/feature-section";
 import {getClient} from "@/apollo-client";
 import {GetPageBySlugDocument, GetPageBySlugQuery} from "@/gql/graphql";
 import {notFound} from "next/navigation";
-import { getPreprHeaders } from '@preprio/prepr-nextjs'
+import { getPreprHeaders } from '@preprio/prepr-nextjs/server'
 
 export const revalidate = 0
 export const dynamic = 'force-dynamic'

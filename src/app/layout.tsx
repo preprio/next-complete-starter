@@ -3,12 +3,15 @@ import NavBar from "@/components/navbar";
 import './globals.css'
 import {Ubuntu} from "next/font/google";
 import Script from 'next/script'
-// Helper function to get all the props for the PreviewBar component (this needs a server component)
-import { getPreviewBarProps } from '@preprio/prepr-nextjs'
-// Import the PreviewBar component
-import { PreprPreviewBar } from '@preprio/prepr-nextjs/components'
-// Import the PreviewBar CSS
-import '@preprio/prepr-nextjs/dist/components.css'
+
+// Helper function to get all the props for the PreprToolbar component (this needs a server component)
+import { getToolbarProps, extractAccessToken } from '@preprio/prepr-nextjs/server'
+ 
+// Import the PreprToolbar component & provider
+import { PreprToolbar, PreprToolbarProvider, PreprTrackingPixel} from '@preprio/prepr-nextjs/react'
+ 
+// Import the CSS for the PreprToolbar
+import '@preprio/prepr-nextjs/index.css'
 
 const ubuntu = Ubuntu({weight: ['400', '700'], subsets: ['latin']})
 
@@ -17,26 +20,32 @@ export const metadata: Metadata = {
   description: "Showing the power of personalization and A/B testing",
 };
 
-export default async function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
-
-  // Get the props for the PreviewBar component, pass the access token as an argument
-  const previewBarProps = await getPreviewBarProps(process.env.PREPR_GRAPHQL_URL!)
-
+export default async function RootLayout({children,}: {children: React.ReactNode})
+{
+    // Get the props for the PreprToolbar component and check that the environment variable is set to preview
+    const isPreview = process.env.PREPR_ENV === 'preview'
+    const toolbarProps = isPreview ? await getToolbarProps(process.env.PREPR_GRAPHQL_URL!) : null
+    const accessToken = extractAccessToken(process.env.PREPR_GRAPHQL_URL!)
+    
   return (
-    <html lang="en">
-    <head>
-      <Script
-        id={'prepr_script'}
-        dangerouslySetInnerHTML={{
-          __html: `YOUR-PREPR-TRACKING-CODE`,
-        }}></Script>
-    </head>
-    <body className={ubuntu.className}>
-    {/* Render the PreviewBar component and spread the previewBarProps */}
-    <PreprPreviewBar {...previewBarProps} />
-    <NavBar/>
-    {children}
-    </body>
+      <html lang="en">
+      <head>
+        <PreprTrackingPixel accessToken={accessToken!}/>
+      </head>
+      <body className={ubuntu.className}>
+        {isPreview && toolbarProps ? (
+          <PreprToolbarProvider props={toolbarProps}>
+              <PreprToolbar />
+              <NavBar/>
+              {children}
+          </PreprToolbarProvider>
+          ) : (
+              <>
+                  <NavBar/>
+                  {children}
+              </>
+          )}
+      </body>
     </html>
   );
 }
