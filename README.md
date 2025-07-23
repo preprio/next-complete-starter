@@ -37,14 +37,6 @@ In the `codegen.ts` file, replace the schema value `<YOUR_PREPR_GRAPHQL_URL>` wi
 
 ![preview API URL](https://assets-site.prepr.io//35k5a4g45wuy-preview-access-token.png)
 
-## Add the Prepr tracking pixel
-
-Go to the `src/app/layout.tsx` file and replace the placeholder `YOUR-PREPR-TRACKING-CODE` with your own tracking code in Prepr.
-
-![event tracking page](https://assets-site.prepr.io//1j41fnhj1305-tracking-code.png)
-
-Don't forget to remove the HTML tags `<!-- Prepr Tracking Code -->`, `<script>` and `</script>` tags from the embedded code.
-
 
 ## Development Server
 
