@@ -1,12 +1,10 @@
 import Link from 'next/link'
-import { FragmentType, getFragmentData } from '@/gql'
-import { HERO_SECTION_FRAGMENT } from '@/queries/get-page-by-slug'
+import { HeroFragment } from '@/gql/graphql'
 import Image from 'next/image'
 import Button from '@/components/button'
 
-export default function HeroSection(props: { item: FragmentType<typeof HERO_SECTION_FRAGMENT> })
+export default function HeroSection({ item }: { item: HeroFragment })
 {
-  const item = getFragmentData(HERO_SECTION_FRAGMENT, props.item)
   const image = item.image
 
   return (

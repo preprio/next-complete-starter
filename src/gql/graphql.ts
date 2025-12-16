@@ -16,6 +16,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** The `JSON` scalar type represents any JSON-serializable value, allowing for dynamic and structured data as per ECMA-404. */
   Json: { input: any; output: any; }
+  /** The Locale type adheres to ISO i18n standard. For example: German in the Austria is represented as de-AT. */
+  Locale: { input: any; output: any; }
   /** The DateTime type adheres to ISO 8601 standard. */
   _DateTime: { input: any; output: any; }
 };
@@ -47,6 +49,8 @@ export type Asset = {
   cover?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   duration?: Maybe<Scalars['Int']['output']>;
+  /** The focal point coordinates (x, y) represent percentages of the image dimensions, ranging from 0 to 100. */
+  focal_point?: Maybe<_FocalPoint>;
   height?: Maybe<Scalars['Int']['output']>;
   mime_type?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -266,6 +270,13 @@ export type Cards = Component & {
   variant?: Maybe<CardsVariant>;
 };
 
+
+/** Cards component. */
+export type CardsCardsArgs = {
+  personalize?: Scalars['Boolean']['input'];
+  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 /** CardsVariant. */
 export enum CardsVariant {
   /** Blog */
@@ -425,6 +436,15 @@ export type Contact = Component & {
   hubspot_portal_id?: Maybe<Scalars['String']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
   sub_heading?: Maybe<Scalars['String']['output']>;
+};
+
+/** Content component. */
+export type Content = Component & {
+  __typename?: 'Content';
+  _context?: Maybe<Context>;
+  _id: Scalars['String']['output'];
+  main_content?: Maybe<Array<Maybe<_Prepr_Types>>>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type ContentItems = {
@@ -657,6 +677,13 @@ export type Hero = Component & {
   sub_heading?: Maybe<Scalars['String']['output']>;
 };
 
+
+/** Hero component. */
+export type HeroButtonsArgs = {
+  personalize?: Scalars['Boolean']['input'];
+  personalize_for_segments?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 /** Embedded HubSpot form. */
 export type HubSpotEmbed = {
   __typename?: 'HubSpotEmbed';
@@ -871,7 +898,7 @@ export type PageWhereInput = {
   title_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Page_Content = Cta | Cards | Contact | Faq | Feature | Hero | Static;
+export type Page_Content = Cta | Cards | Contact | Content | Faq | Feature | Hero | Static;
 
 export type Page_ContentWhereInput = {
   /** Matches if the Id field is equal to one of the items in the given list. */
@@ -888,6 +915,14 @@ export type Pages = {
   __typename?: 'Pages';
   items: Array<Page>;
   total: Scalars['Int']['output'];
+};
+
+/** Embedded Pipedrive Web Form. */
+export type PipedriveEmbed = {
+  __typename?: 'PipedriveEmbed';
+  _id: Scalars['String']['output'];
+  /** Pipedrive Web Form URL */
+  url: Scalars['String']['output'];
 };
 
 /** Single Post. */
@@ -1299,6 +1334,8 @@ export type Query = {
   Similar_Products?: Maybe<Products>;
   /** Recommendation recipe suitable for recommending Redirects which are similar to the giving item */
   Similar_Redirects?: Maybe<Redirects>;
+  /** Retrieve the list of available locales. */
+  _Locales?: Maybe<Array<Scalars['Locale']['output']>>;
   /** Retrieve the list of Prepr segments for the Preview Next.js preview bar. */
   _Segments?: Maybe<Array<_Segment>>;
 };
@@ -1971,6 +2008,12 @@ export enum _Event {
   Vote = 'Vote'
 }
 
+export type _FocalPoint = {
+  __typename?: '_FocalPoint';
+  x: Scalars['Int']['output'];
+  y: Scalars['Int']['output'];
+};
+
 export type _Segment = {
   __typename?: '_Segment';
   _id?: Maybe<Scalars['String']['output']>;
@@ -1979,32 +2022,20 @@ export type _Segment = {
 };
 
 /** This union type contains all components and remote sources. */
-export type _Prepr_Types = ApplePodcast | Assets | BlueskyPost | Button | Cta | Cards | CommerceProductsCollection | Contact | Coordinates | FaqQuestion | FacebookPost | Feature | Hero | HubSpotEmbed | InstagramPost | NavigationItem | Quote | Resource | Seo | SoundCloudPost | SpotifyPlaylist | Static | Text | ThreadsPost | TikTokPost | TwitterPost | TypeformEmbed | VimeoPost | YouTubePost;
+export type _Prepr_Types = ApplePodcast | Assets | BlueskyPost | Button | Cta | Cards | CommerceProductsCollection | Contact | Content | Coordinates | FaqQuestion | FacebookPost | Feature | Hero | HubSpotEmbed | InstagramPost | NavigationItem | PipedriveEmbed | Quote | Resource | Seo | SoundCloudPost | SpotifyPlaylist | Static | Text | ThreadsPost | TikTokPost | TwitterPost | TypeformEmbed | VimeoPost | YouTubePost;
+
+export type ButtonFragment = { __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null };
+
+export type FeatureFragment = { __typename?: 'Feature', _id: string, heading?: string | null, sub_heading?: string | null, image_position?: ImagePosition | null, button?: { __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, image?: { __typename?: 'Asset', url?: string | null } | null };
+
+export type HeroFragment = { __typename?: 'Hero', _id: string, sub_heading?: string | null, heading?: string | null, image?: { __typename?: 'Asset', url?: string | null, height?: number | null, width?: number | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, buttons: Array<{ __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null }> };
 
 export type GetPageBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetPageBySlugQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', title?: string | null, _id: string, content: Array<{ __typename: 'CTA' } | { __typename: 'Cards' } | { __typename: 'Contact' } | { __typename: 'FAQ' } | (
-      { __typename: 'Feature' }
-      & { ' $fragmentRefs'?: { 'FeatureFragment': FeatureFragment } }
-    ) | (
-      { __typename: 'Hero' }
-      & { ' $fragmentRefs'?: { 'HeroFragment': HeroFragment } }
-    ) | { __typename: 'Static' }> } | null };
-
-export type FeatureFragment = { __typename?: 'Feature', _id: string, heading?: string | null, sub_heading?: string | null, image_position?: ImagePosition | null, button?: (
-    { __typename?: 'Button' }
-    & { ' $fragmentRefs'?: { 'ButtonFragment': ButtonFragment } }
-  ) | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, image?: { __typename?: 'Asset', url?: string | null } | null } & { ' $fragmentName'?: 'FeatureFragment' };
-
-export type HeroFragment = { __typename?: 'Hero', _id: string, sub_heading?: string | null, heading?: string | null, image?: { __typename?: 'Asset', url?: string | null, height?: number | null, width?: number | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, buttons: Array<(
-    { __typename?: 'Button' }
-    & { ' $fragmentRefs'?: { 'ButtonFragment': ButtonFragment } }
-  )> } & { ' $fragmentName'?: 'HeroFragment' };
-
-export type ButtonFragment = { __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null } & { ' $fragmentName'?: 'ButtonFragment' };
+export type GetPageBySlugQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', title?: string | null, _id: string, content: Array<{ __typename: 'CTA' } | { __typename: 'Cards' } | { __typename: 'Contact' } | { __typename: 'Content' } | { __typename: 'FAQ' } | { __typename: 'Feature', _id: string, heading?: string | null, sub_heading?: string | null, image_position?: ImagePosition | null, button?: { __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, image?: { __typename?: 'Asset', url?: string | null } | null } | { __typename: 'Hero', _id: string, sub_heading?: string | null, heading?: string | null, image?: { __typename?: 'Asset', url?: string | null, height?: number | null, width?: number | null } | null, _context?: { __typename?: 'Context', variant_key?: string | null } | null, buttons: Array<{ __typename?: 'Button', button_type?: ButtonType | null, text?: string | null, external_url?: string | null, link?: { __typename?: 'Category', _slug?: string | null } | { __typename?: 'Page', _slug?: string | null } | { __typename?: 'Post', _slug?: string | null } | null }> } | { __typename: 'Static' }> } | null };
 
 export const ButtonFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}}]} as unknown as DocumentNode<ButtonFragment, unknown>;
 export const FeatureFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Feature"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"heading"}},{"kind":"Field","name":{"kind":"Name","value":"sub_heading"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Button"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_context"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"variant_key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image_position"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"width"},"value":{"kind":"IntValue","value":"870"}},{"kind":"Argument","name":{"kind":"Name","value":"height"},"value":{"kind":"IntValue","value":"570"}}]}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Button"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Button"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"button_type"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"external_url"}},{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_slug"}}]}}]}}]}}]} as unknown as DocumentNode<FeatureFragment, unknown>;

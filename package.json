@@ -1,10 +1,10 @@
 {
   "name": "next-complete-starter",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run codegen && next build",
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.ts"
@@ -12,12 +12,15 @@
   "dependencies": {
     "@apollo/client": "^3.13.7",
     "@apollo/client-integration-nextjs": "^0.12.3",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@preprio/prepr-nextjs": "2.0.4",
     "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "graphql": "^16.10.0",
-    "next": "15.4.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "16.0.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.5",
@@ -28,9 +31,15 @@
     "@graphql-codegen/typescript-resolvers": "^4.5.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.2.6",
+    "@types/react-dom": "19.2.3",
     "tailwindcss": "^4",
     "typescript": "^5.8.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.6",
+      "@types/react-dom": "19.2.3"
+    }
   }
 }

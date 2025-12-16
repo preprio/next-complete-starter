@@ -1,4 +1,3 @@
-import {ComponentProps} from 'react'
 import classNames from 'classnames'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

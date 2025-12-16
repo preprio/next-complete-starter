@@ -22,7 +22,7 @@ async function getData(slug: string) {
     fetchPolicy: 'no-cache',
   })
 
-  if (!data.Page) {
+  if (!data?.Page) {
     return notFound()
   }
 

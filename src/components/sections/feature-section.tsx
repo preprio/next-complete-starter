@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { FragmentType, getFragmentData } from '@/gql'
-import { BUTTON_FRAGMENT, FEATURE_SECTION_FRAGMENT } from '@/queries/get-page-by-slug'
+import { FeatureFragment } from '@/gql/graphql'
 import Image from 'next/image'
 import Button from '@/components/button'
 
-export default function FeatureSection(props: { item: FragmentType<typeof FEATURE_SECTION_FRAGMENT> }) {
-  const item = getFragmentData(FEATURE_SECTION_FRAGMENT, props.item)
-  const button = getFragmentData(BUTTON_FRAGMENT, item.button)
+export default function FeatureSection({ item }: { item: FeatureFragment }) {
+  const button = item.button
 
   const image = (<div className="order-first md:order-none basis-1/2 ">
     <Image src={item.image?.url || ''} alt="Feature image" width={800} height={300} className='rounded-2xl w-full aspect-[29/19] object-cover'/>
