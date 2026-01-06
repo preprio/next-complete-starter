@@ -1,6 +1,6 @@
 {
   "name": "next-complete-starter",
-  "version": "2.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -10,31 +10,31 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.13.7",
-    "@apollo/client-integration-nextjs": "^0.12.3",
+    "@apollo/client": "^4.0.11",
+    "@apollo/client-integration-nextjs": "^0.14.3",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@preprio/prepr-nextjs": "2.0.4",
+    "@preprio/prepr-nextjs": "2.1.3",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
-    "graphql": "^16.10.0",
-    "next": "16.0.7",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "graphql": "^16.12.0",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "5.0.5",
-    "@graphql-codegen/client-preset": "^4.8.3",
-    "@graphql-codegen/introspection": "4.0.3",
-    "@graphql-codegen/typescript": "^4.1.6",
-    "@graphql-codegen/typescript-react-apollo": "^4.3.3",
-    "@graphql-codegen/typescript-resolvers": "^4.5.1",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "19.2.6",
+    "@graphql-codegen/cli": "6.1.0",
+    "@graphql-codegen/client-preset": "^5.2.2",
+    "@graphql-codegen/introspection": "5.0.0",
+    "@graphql-codegen/typescript": "^5.0.7",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.4",
+    "@graphql-codegen/typescript-resolvers": "^5.1.5",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.3",
+    "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "tailwindcss": "^4",
-    "typescript": "^5.8.3"
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
   },
   "pnpm": {
     "overrides": {
