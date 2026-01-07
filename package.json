@@ -27,7 +27,7 @@
     "@graphql-codegen/client-preset": "^5.2.2",
     "@graphql-codegen/introspection": "5.0.0",
     "@graphql-codegen/typescript": "^5.0.7",
-    "@graphql-codegen/typescript-react-apollo": "^4.3.4",
+    "@graphql-codegen/typescript-react-apollo": "^4.4.0",
     "@graphql-codegen/typescript-resolvers": "^5.1.5",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.3",
