@@ -40,14 +40,15 @@
     "overrides": {
       "@types/react": "19.2.14",
       "@types/react-dom": "19.2.3",
-      "js-yaml": ">=4.2.0",
+      "js-yaml": ">=5.2.1",
       "picomatch": ">=4.0.4",
       "yaml": ">=2.8.3",
       "postcss": ">=8.5.10",
       "shell-quote": ">=1.8.4",
       "ws": ">=8.20.1",
-      "brace-expansion": ">=5.0.6",
-      "@babel/core": ">=7.29.6"
+      "brace-expansion": ">=5.0.7",
+      "@babel/core": ">=7.29.6",
+      "brace-expansion@>=3": "5.0.7"
     }
   }
 }
