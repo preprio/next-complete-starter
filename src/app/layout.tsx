@@ -2,9 +2,7 @@ import type {Metadata} from "next";
 import NavBar from "@/components/navbar";
 import './globals.css'
 import {Ubuntu} from "next/font/google";
-import { extractAccessToken } from '@preprio/prepr-nextjs/server'
-import { PreprTrackingPixel } from '@preprio/prepr-nextjs/react'
-import '@preprio/prepr-nextjs/index.css'
+import { extractAccessToken, PreprTrackingPixel } from '@preprio/toolkit/nextjs'
 
 const ubuntu = Ubuntu({weight: ['400', '700'], subsets: ['latin']})
 
@@ -20,7 +18,7 @@ export default async function RootLayout({children,}: {children: React.ReactNode
   return (
       <html lang="en">
       <head>
-        <PreprTrackingPixel accessToken={accessToken!}/>
+        {accessToken && <PreprTrackingPixel id={accessToken} />}
       </head>
       <body className={ubuntu.className}>
         <NavBar/>

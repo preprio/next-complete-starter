@@ -1,10 +1,7 @@
 import { Suspense } from 'react'
 
 // Helper function to get all the props for the PreprToolbar component (this needs a server component)
-import { getToolbarProps, extractAccessToken } from '@preprio/prepr-nextjs/server'
-
-// Import the PreprToolbar component & provider
-import { PreprToolbar, PreprToolbarProvider } from '@preprio/prepr-nextjs/react'
+import { getToolbarProps, PreprToolbar } from '@preprio/toolkit/nextjs'
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
     // Get the props for the PreprToolbar component and check that the environment variable is set to preview
@@ -23,17 +20,15 @@ export default async function Layout({ children }: { children: React.ReactNode }
       }
     }
     
-    const accessToken = extractAccessToken((process.env.PREPR_GRAPHQL_URL || 'https://graphql.prepr.io/ac_5e48636ec968b4fe9b7490b0fc4f7702e51873418ae2acbc58c6431d9fe27429')!)
-    
     return (
         <>
             {isPreview && toolbarProps ? (
-                <PreprToolbarProvider props={toolbarProps}>
+                <>
                     <Suspense fallback={null}>
-                        <PreprToolbar />
+                        <PreprToolbar {...toolbarProps} />
                     </Suspense>
                     {children}
-                </PreprToolbarProvider>
+                </>
             ) : (
                 children
             )}

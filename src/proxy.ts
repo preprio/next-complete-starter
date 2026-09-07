@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server'
-import createPreprMiddleware from '@preprio/prepr-nextjs/middleware'
+import { createPreprMiddleware } from '@preprio/toolkit/nextjs'
 
 export function proxy(request: NextRequest) {
   return createPreprMiddleware(request, { preview: true })
