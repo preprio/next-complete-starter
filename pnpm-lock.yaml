@@ -35,8 +35,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(graphql@16.13.2)
       '@preprio/toolkit':
-        specifier: 0.3.4
-        version: 0.3.4(next@16.3.3(@babel/core@8.0.1)(@types/node@25.6.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        specifier: 0.4.0
+        version: 0.4.0(next@16.3.3(@babel/core@8.0.1)(@types/node@25.6.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -913,8 +913,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@preprio/toolkit@0.3.4':
-    resolution: {integrity: sha512-rOjQ1LKfEBO0sELupEv8FWsZTCGdSaQm4ZZp50eYfNNOF6AaQDtxEo1alKiS31IZ1PW+0VAq53n0AnQpHqzQJg==}
+  '@preprio/toolkit@0.4.0':
+    resolution: {integrity: sha512-9f1XcbiFe85lw59sd104zlUnDgB/srjOVjAWoVLK0MaeRMEMgQ+pJc2emkbx3G/scJuEfqqXdeuV+bSAubuTIA==}
     engines: {node: '>=18.17'}
     peerDependencies:
       next: '>=13'
@@ -2983,7 +2983,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@preprio/toolkit@0.3.4(next@16.3.3(@babel/core@8.0.1)(@types/node@25.6.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@preprio/toolkit@0.4.0(next@16.3.3(@babel/core@8.0.1)(@types/node@25.6.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@vercel/stega': 1.1.0
       preact: 10.29.8
