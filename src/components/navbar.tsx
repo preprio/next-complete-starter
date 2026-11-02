@@ -8,7 +8,7 @@ export default function NavBar() {
   const navItems = [
     {
       text: 'Find a car',
-      href: '/catalog',
+      href: '#',
     },
     {
       text: 'About Acme',
